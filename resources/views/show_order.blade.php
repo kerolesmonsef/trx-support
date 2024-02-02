@@ -50,6 +50,6 @@
     border-radius: 5px;
     color: #fea84b;
     padding: 14px;
-    font-size: 18px;" href="/" class="text-decoration-none">طلب جديد</a>
+    font-size: 18px;" href="/" class="text-decoration-none">ادخال رقم طلب جديد</a>
     </div>
 @endsection
