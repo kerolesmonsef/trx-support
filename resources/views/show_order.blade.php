@@ -25,7 +25,7 @@
                     <ul class="list-group" style="background-color: #131416">
                         @forelse($order->coupons as $coupon)
                             <li class="list-group-item" style="   border-bottom: 1px solid wheat ;background-color: #131416;border-bottom: 1px solid wheat;">
-                                <span style="color: white;font-weight: bold;font-size: 20px">{{ $loop->index + 1  }}{{ $coupon->code }}</span>
+                                <span style="color: white;font-weight: bold;font-size: 20px">{{ $loop->index + 1  }} {{ $coupon->code }}</span>
                                 <span class="badge bg-secondary ms-5 me-5">{{ $coupon->price }} $</span>
                             </li>
                         @empty
