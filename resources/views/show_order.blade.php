@@ -75,7 +75,8 @@
                 heading: 'Information',
                 text: 'تم نسخ الكود بنجاح',
                 showHideTransition: 'slide',
-                icon: 'info'
+                icon: 'info',
+                position:"top-left"
             })
         });
     </script>
