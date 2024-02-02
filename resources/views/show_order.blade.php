@@ -74,16 +74,12 @@
             Swal.fire({
                 toast: true,
                 icon: 'success',
-                title: 'Posted successfully',
+                title: 'تم النسخ بنحاج',
                 animation: false,
-                position: 'bottom',
+                position: 'bottom-left',
                 showConfirmButton: false,
                 timer: 3000,
-                timerProgressBar: true,
-                didOpen: (toast) => {
-                    toast.addEventListener('mouseenter', Swal.stopTimer)
-                    toast.addEventListener('mouseleave', Swal.resumeTimer)
-                }
+                timerProgressBar: true
             })
         });
     </script>
