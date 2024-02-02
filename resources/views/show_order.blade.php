@@ -29,6 +29,7 @@
                                     {{ $loop->index + 1  }} - {{ $coupon->code }}
                                 </span>
                                 <span class="badge bg-secondary ms-5 me-5"> سعر الكوبون{{ $coupon->price }} $</span>
+                                <br>
                                 <span class="float-start badge bg-warning copy" style="cursor: pointer">نسخ الكود</span>
                             </li>
                         @empty
@@ -55,4 +56,8 @@
     padding: 14px;
     font-size: 18px;" href="/" class="text-decoration-none">ادخال رقم طلب جديد</a>
     </div>
+
+    <script>
+
+    </script>
 @endsection
