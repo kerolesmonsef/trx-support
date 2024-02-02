@@ -1,6 +1,6 @@
 @extends("order_master")
 @section("title")
-    بيانات الطلب الخاص بك <a href="/" class="text-decoration-none">طلب جديد</a>
+    بيانات الطلب الخاص بك
 @endsection
 @section("content")
     <div class="container mt-4">
@@ -42,5 +42,7 @@
                 </td>
             </tr>
         </table>
+
+        <a href="/" class="text-decoration-none">طلب جديد</a>
     </div>
 @endsection
