@@ -26,7 +26,7 @@
                         @forelse($order->coupons as $coupon)
                             <li class="list-group-item" style="color: black">
                                 <span style="font-weight: bold;font-size: 20px">
-                                    {{ $loop->index + 1  }} - {{ $coupon->code }}
+                                    {{ $loop->index + 1  }} - <span class="code">{{ $coupon->code }}</span>
                                 </span>
                                 <span class="float-start badge bg-secondary"> سعر الكوبون{{ $coupon->price }} $</span>
                                 <br>
@@ -57,7 +57,16 @@
     font-size: 18px;" href="/" class="text-decoration-none">ادخال رقم طلب جديد</a>
     </div>
 
+{{--    jquery cdn--}}
+    <script
+        src="https://code.jquery.com/jquery-3.7.1.min.js"
+        integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo="
+        crossorigin="anonymous"></script>
     <script>
-
+        $(".copy").click(function () {
+            let code = $(this).parent().find(".code").text();
+            navigator.clipboard.writeText(code);
+            alert("تم نسخ الكود بنجاح");
+        });
     </script>
 @endsection
