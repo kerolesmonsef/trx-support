@@ -34,6 +34,13 @@
                     </ul>
                 </td>
             </tr>
+
+            <tr>
+                <th style="color: #fea84b" class="text-right">ملاحظات</th>
+                <td style="color: white">
+                    {{ empty($order->note) ? "لا يوجد" : $order->note }}
+                </td>
+            </tr>
         </table>
     </div>
 @endsection

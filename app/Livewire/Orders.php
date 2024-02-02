@@ -13,6 +13,7 @@ class Orders extends Component
 
     public $order_id = "";
     public $price = "0";
+    public $note = "";
     public $order = ""; // create or update
     public $coupons = [];
 
@@ -49,6 +50,7 @@ class Orders extends Component
         $this->order = "";
         $this->order_id = "";
         $this->price = "0";
+        $this->note = "";
     }
 
     public function delete($order_id){
@@ -62,6 +64,7 @@ class Orders extends Component
         $this->order = $order->id;
         $this->order_id = $order->order_id;
         $this->price = $order->price;
+        $this->note = $order->note;
         $this->coupons = Coupon::where('order_id', $order_id)->get()->toArray();
     }
     protected function saveCoupons(Order $order)
@@ -72,6 +75,7 @@ class Orders extends Component
                 'order_id' => $order->id,
                 'price' => $coupon['price'],
                 'code' => $coupon['code'],
+                'note' => $coupon['note'],
             ]);
         }
     }

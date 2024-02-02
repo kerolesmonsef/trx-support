@@ -6,12 +6,16 @@
         <div class="row">
             <div class="col-md-12">
                 <div class="form-group">
-                    <label>Order ID</label>
+                    <label>رقم الطلب</label>
                     <input type="text" class="form-control" wire:model.live="order_id" >
                 </div>
                 <div class="form-group">
-                    <label>Price</label>
+                    <label>السعر</label>
                     <input type="number" class="form-control" wire:model.live="price" >
+                </div>
+                <div class="form-group">
+                    <label>ملاحظة</label>
+                    <input type="text" class="form-control" wire:model.live="note" >
                 </div>
             </div>
             <div class="col-md-12">
