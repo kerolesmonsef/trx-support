@@ -34,13 +34,19 @@ class Orders extends Component
             ]);
 
             $order = Order::find($this->order);
+            $order->update([
+                'order_id' => $this->order_id,
+                'price' => $this->price,
+                'note' => $this->note,
+            ]);
         } else { // create
             $this->validate([
                 'order_id' => 'required|unique:orders'
             ]);
             $order = Order::create([
                 'order_id' => $this->order_id,
-                'price' => $this->price
+                'price' => $this->price,
+                'note' => $this->note,
             ]);
         }
 
@@ -53,7 +59,8 @@ class Orders extends Component
         $this->note = "";
     }
 
-    public function delete($order_id){
+    public function delete($order_id)
+    {
         Order::find($order_id)->delete();
         session()->flash('message', 'تم الحذف بنجاح');
     }
@@ -67,6 +74,7 @@ class Orders extends Component
         $this->note = $order->note;
         $this->coupons = Coupon::where('order_id', $order_id)->get()->toArray();
     }
+
     protected function saveCoupons(Order $order)
     {
         $order->coupons()->delete();
@@ -75,7 +83,6 @@ class Orders extends Component
                 'order_id' => $order->id,
                 'price' => $coupon['price'],
                 'code' => $coupon['code'],
-                'note' => $coupon['note'],
             ]);
         }
     }
