@@ -29,7 +29,7 @@
                                     {{ $loop->index + 1  }} - {{ $coupon->code }}
                                 </span>
                                 <span class="badge bg-secondary ms-5 me-5"> سعر الكوبون{{ $coupon->price }} $</span>
-                                <span class="float-start badge pg-warning">نسخ الكود</span>
+                                <span class="float-start badge bg-warning copy" style="cursor: pointer">نسخ الكود</span>
                             </li>
                         @empty
                             <li class="list-group-item">لا توجد كوبونات</li>
