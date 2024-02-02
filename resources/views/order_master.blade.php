@@ -4,6 +4,8 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link href="{{ asset("css/bootstrap.min.css") }}" rel="stylesheet">
+{{--  icon  --}}
+    <link rel="icon" href="{{ asset("images/dark-logo.png") }}" type="image/x-icon">
     <title>Trx</title>
 </head>
 <body class="" style="background-color: #131416" dir="rtl">
