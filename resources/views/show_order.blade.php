@@ -66,17 +66,24 @@
         src="https://code.jquery.com/jquery-3.7.1.min.js"
         integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo="
         crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/jquery-toast-plugin@1.3.2/dist/jquery.toast.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script>
         $(".copy").click(function () {
             let code = $(this).parent().find(".code").text();
             navigator.clipboard.writeText(code);
-            $.toast({
-                heading: 'Information',
-                text: 'تم نسخ الكود بنجاح',
-                showHideTransition: 'slide',
-                icon: 'info',
-                position:"top-left"
+            Swal.fire({
+                toast: true,
+                icon: 'success',
+                title: 'Posted successfully',
+                animation: false,
+                position: 'bottom',
+                showConfirmButton: false,
+                timer: 3000,
+                timerProgressBar: true,
+                didOpen: (toast) => {
+                    toast.addEventListener('mouseenter', Swal.stopTimer)
+                    toast.addEventListener('mouseleave', Swal.resumeTimer)
+                }
             })
         });
     </script>
