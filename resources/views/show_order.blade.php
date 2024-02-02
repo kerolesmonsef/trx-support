@@ -26,7 +26,7 @@
                         @forelse($order->coupons as $coupon)
                             <li class="list-group-item" style="color: black">
                                 <span style="font-weight: bold;font-size: 20px">{{ $loop->index + 1  }} - {{ $coupon->code }}</span>
-                                <span class="badge bg-secondary ms-5 me-5">{{ $coupon->price }} $</span>
+                                <span class="badge bg-secondary ms-5 me-5"> سعر الكوبون{{ $coupon->price }} $</span>
                             </li>
                         @empty
                             <li class="list-group-item">لا توجد كوبونات</li>
