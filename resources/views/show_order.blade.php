@@ -74,7 +74,7 @@
             Swal.fire({
                 toast: true,
                 icon: 'success',
-                title: 'تم النسخ بنحاج',
+                title: 'تم النسخ بنجاح',
                 animation: false,
                 position: 'bottom-left',
                 showConfirmButton: false,
