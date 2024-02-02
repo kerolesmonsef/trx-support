@@ -28,7 +28,7 @@
                                 <span style="font-weight: bold;font-size: 20px">
                                     {{ $loop->index + 1  }} - {{ $coupon->code }}
                                 </span>
-                                <span class="badge bg-secondary ms-5 me-5"> سعر الكوبون{{ $coupon->price }} $</span>
+                                <span class="float-start badge bg-secondary ms-5 me-5"> سعر الكوبون{{ $coupon->price }} $</span>
                                 <br>
                                 <span class="float-start badge bg-warning copy mt-2" style="cursor: pointer">نسخ الكود</span>
                             </li>
