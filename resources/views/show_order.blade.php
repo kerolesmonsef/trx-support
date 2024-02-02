@@ -67,7 +67,12 @@
         $(".copy").click(function () {
             let code = $(this).parent().find(".code").text();
             navigator.clipboard.writeText(code);
-            $.toast("تم نسخ الكود بنجاح");
+            $.toast({
+                heading: 'Information',
+                text: 'تم نسخ الكود بنجاح',
+                showHideTransition: 'slide',
+                icon: 'info'
+            })
         });
     </script>
 @endsection
