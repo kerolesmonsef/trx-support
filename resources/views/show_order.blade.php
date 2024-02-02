@@ -43,7 +43,7 @@
             </tr>
         </table>
 
-        <a style="isplay: block;
+        <a style="display: block;
     text-align: center;
     margin-top: 32px;
     border: 1px solid #fea84b;
