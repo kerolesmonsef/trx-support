@@ -16,9 +16,10 @@ class Orders extends Component
     public $order_id = "";
     public $price = "0";
     public $note = "";
+    public $secure_phone = "";
+    public $secure_password = "";
     public $order = ""; // create or update
     public $coupons = [];
-
     public $search = '';
     public $seen_type = 'all';
     protected $paginationTheme = 'bootstrap';
@@ -57,8 +58,6 @@ class Orders extends Component
             }, $this->coupons);
 
             $couponIds = array_filter($couponIds);
-
-
             $this->validate([
                 'order_id' => "required|unique:orders,order_id,{$this->order}",
                 'price' => ['required'],
@@ -69,12 +68,13 @@ class Orders extends Component
                 ],
             ]);
 
-
             $order = Order::find($this->order);
             $order->update([
                 'order_id' => $this->order_id,
                 'price' => $this->price,
                 'note' => $this->note,
+                'secure_phone' => $this->secure_phone,
+                'secure_password' => $this->secure_password,
             ]);
         } else { // create
             $this->validate([
@@ -84,6 +84,8 @@ class Orders extends Component
                 'order_id' => $this->order_id,
                 'price' => $this->price,
                 'note' => $this->note,
+                'secure_phone' => $this->secure_phone,
+                'secure_password' => $this->secure_password,
             ]);
         }
 
@@ -94,6 +96,8 @@ class Orders extends Component
         $this->order_id = "";
         $this->price = "0";
         $this->note = "";
+        $this->secure_phone = "";
+        $this->secure_password = "";
     }
 
     public function delete($order_id)
@@ -109,6 +113,8 @@ class Orders extends Component
         $this->order_id = $order->order_id;
         $this->price = $order->price;
         $this->note = $order->note;
+        $this->secure_phone = $order->secure_phone;
+        $this->secure_password = $order->secure_password;
         $this->coupons = Coupon::where('order_id', $order_id)->get()->toArray();
     }
 

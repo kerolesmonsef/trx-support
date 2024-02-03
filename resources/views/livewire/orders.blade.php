@@ -1,5 +1,8 @@
 <div>
-    <div class="card">
+
+    @include("livewire.components.add_edit_order")
+
+    <div class="card mt-3">
         <div class="card-header">
             الطلبات
         </div>
@@ -25,7 +28,7 @@
                 @endif
 
             </div>
-            @include("livewire.components.add_edit_order")
+
             <hr>
             <div class="row">
                 <div class="col-md-4">

@@ -1,21 +1,39 @@
 <div class="card">
     <div class="card-header">
-
+        @if($order)
+            تعديل الطلب رقم {{ \App\Models\Order::find($order)?->order_id }}
+        @else
+            طلب جديد
+        @endif
     </div>
     <div class="card-body">
         <div class="row">
             <div class="col-md-12">
                 <div class="form-group">
                     <label>رقم الطلب</label>
-                    <input type="text" class="form-control" wire:model.live="order_id" >
+                    <input type="text" class="form-control" wire:model.live="order_id">
                 </div>
-                <div class="form-group">
-                    <label>السعر</label>
-                    <input type="number" class="form-control" wire:model.live="price" >
+            </div>
+            <div class="form-group">
+                <label>السعر</label>
+                <input type="number" class="form-control" wire:model.live="price">
+            </div>
+            <div class="form-group">
+                <label>ملاحظة</label>
+                <input type="text" class="form-control" wire:model.live="note">
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label>اضافة حماية رقم هاتف</label>
+                        <input type="text" class="form-control" wire:model.live="secure_phone">
+                    </div>
                 </div>
-                <div class="form-group">
-                    <label>ملاحظة</label>
-                    <input type="text" class="form-control" wire:model.live="note" >
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label>اضافة حماية كلمة مرور</label>
+                        <input type="text" class="form-control" wire:model.live="secure_password">
+                    </div>
                 </div>
             </div>
             <div class="col-md-12">
@@ -32,26 +50,26 @@
                     </tr>
                     </thead>
                     <tbody>
-                        @foreach($coupons as $key => $coupon)
-                            <tr>
-                                <td>
-                                    <input type="text" class="form-control" wire:model.live="coupons.{{ $key }}.code">
-                                </td>
-                                <td>
-                                    <input type="number" class="form-control" wire:model.live="coupons.{{ $key }}.price">
-                                </td>
-                                <td>
-                                    <button class="btn btn-danger" wire:click="deleteCoupon({{ $key }})">حذف</button>
-                                </td>
-                            </tr>
-                        @endforeach
+                    @foreach($coupons as $key => $coupon)
+                        <tr>
+                            <td>
+                                <input type="text" class="form-control" wire:model.live="coupons.{{ $key }}.code">
+                            </td>
+                            <td>
+                                <input type="number" class="form-control" wire:model.live="coupons.{{ $key }}.price">
+                            </td>
+                            <td>
+                                <button class="btn btn-danger" wire:click="deleteCoupon({{ $key }})">حذف</button>
+                            </td>
+                        </tr>
+                    @endforeach
                     </tbody>
                 </table>
             </div>
 
             <div class="col-md-12">
                 <div>
-                    <button class="btn btn-primary" wire:click="save">Save</button>
+                    <button class="btn btn-primary" wire:click="save">حفظ</button>
                 </div>
             </div>
         </div>
