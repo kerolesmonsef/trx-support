@@ -26,6 +26,21 @@
 
             </div>
             @include("livewire.components.add_edit_order")
+            <hr>
+            <div class="row">
+                <div class="col-md-4">
+                    <label for="">بحث</label>
+                    <input type="search" wire:model.live="search" class="form-control" placeholder="بحث">
+                </div>
+                <div class="col-md-4">
+                    <label for="">تمة مشاهدة الطلب</label>
+                    <select wire:model.live="seen_type" class="form-control">
+                        <option value="all">الكل</option>
+                        <option value="seen">تم مشاهدته</option>
+                        <option value="unseen">لم تتم مشاهدته</option>
+                    </select>
+                </div>
+            </div>
             <table class="table table-bordered mt-5">
                 <thead>
                 <tr>
