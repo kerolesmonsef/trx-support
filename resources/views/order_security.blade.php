@@ -24,7 +24,7 @@
                         <label for="security" style="color: #fea84b">
                             <?php
                             if ($order->secure_phone) {
-                                $text = "ادخل رقم الهاتف";
+                                $text = "ادخل رقم الهاتف المسجل في الطلب";
                             } else {
                                 $text = " ادخل كلمة المرور";
                             }
