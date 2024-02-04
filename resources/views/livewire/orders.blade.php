@@ -51,7 +51,8 @@
                     <th>رقم الطلب</th>
                     <th>عدد الكوبونات</th>
                     <th>تاريخ الطلب</th>
-                    <th>تاريخ المشاهدة</th>
+                    <th> المشاهدة</th>
+                    <th> السعر النهائي</th>
                     <th>Action</th>
                 </tr>
                 </thead>
@@ -63,6 +64,7 @@
                         <td>{{ $order->coupons_count }}</td>
                         <td>{{ $order->created_at }}</td>
                         <td>{{ $order->seen_at }}</td>
+                        <td>{{ $order->price }}</td>
                         <td>
                             <button wire:click="edit({{ $order->id }})" class="btn btn-primary btn-sm">تعديل</button>
                             <button

@@ -2,6 +2,7 @@
 
 namespace App\Livewire;
 
+use App\Helpers\CouponValidationHelper;
 use App\Models\Coupon;
 use App\Models\Order;
 use Illuminate\Database\Eloquent\Builder;
@@ -53,20 +54,8 @@ class Orders extends Component
     {
         if ($this->order) {// update
 
-            $couponIds = array_map(function ($coupon) {
-                return $coupon['id'] ?? null;
-            }, $this->coupons);
 
-            $couponIds = array_filter($couponIds);
-            $this->validate([
-                'order_id' => "required|unique:orders,order_id,{$this->order}",
-                'price' => ['required'],
-                'coupons.*.code' => ['required', Rule::unique('coupons', 'code')->where(function ($query) use ($couponIds) {
-                    $query->whereNotIn('id', $couponIds);
-                    return $query;
-                })
-                ],
-            ]);
+            $this->validate(CouponValidationHelper::onUpdateValidationArray($this->coupons, $this->order));
 
             $order = Order::find($this->order);
             $order->update([
@@ -77,9 +66,7 @@ class Orders extends Component
                 'secure_password' => $this->secure_password,
             ]);
         } else { // create
-            $this->validate([
-                'order_id' => 'required|unique:orders'
-            ]);
+            $this->validate(CouponValidationHelper::onCreateValidationArray($this->coupons));
             $order = Order::create([
                 'order_id' => $this->order_id,
                 'price' => $this->price,
