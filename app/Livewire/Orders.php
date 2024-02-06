@@ -2,7 +2,7 @@
 
 namespace App\Livewire;
 
-use App\Helpers\CouponValidationHelper;
+use App\Helpers\Helper;
 use App\Models\Coupon;
 use App\Models\Order;
 use Illuminate\Database\Eloquent\Builder;
@@ -55,7 +55,7 @@ class Orders extends Component
         if ($this->order) {// update
 
 
-            $this->validate(CouponValidationHelper::onUpdateValidationArray($this->coupons, $this->order));
+            $this->validate(Helper::onUpdateValidationArray($this->coupons, $this->order));
 
             $order = Order::find($this->order);
             $order->update([
@@ -66,7 +66,7 @@ class Orders extends Component
                 'secure_password' => $this->secure_password,
             ]);
         } else { // create
-            $this->validate(CouponValidationHelper::onCreateValidationArray($this->coupons));
+            $this->validate(Helper::onCreateValidationArray($this->coupons));
             $order = Order::create([
                 'order_id' => $this->order_id,
                 'price' => $this->price,

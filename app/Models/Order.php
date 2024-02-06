@@ -16,4 +16,9 @@ class Order extends Model
     {
         return $this->hasMany(Coupon::class);
     }
+
+    public function hasSecurity(): bool
+    {
+        return $this->secure_phone || $this->secure_password;
+    }
 }

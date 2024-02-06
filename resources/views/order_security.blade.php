@@ -16,20 +16,19 @@
         }
     </style>
     <div class="container mt-4">
-        <form action="{{ route('orders.show') }}">
-            <input type="hidden" name="order_id" value="{{ $order->order_id }}">
+        <form action="{{ route('orders.security.validate',['order_id'=>$order->order_id]) }}">
             <div class="row">
                 <div class="col-md-12">
                     <div class="form-group">
                         <label for="security" style="color: #fea84b">
                             <?php
                             if ($order->secure_phone) {
-                                $text = "ادخل رقم الهاتف المسجل في الطلب";
+                                $text = "ادخل اخر 4 ارقام من رقم الهاتف المسجل في الطلب";
                             } else {
                                 $text = " ادخل كلمة المرور";
                             }
                             ?>
-                            {{$text}}
+                            {{ $text }}
                         </label>
                         <input
                                 style="background: black;border: 1px solid #fea84b;color: #fea84b;"

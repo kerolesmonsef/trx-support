@@ -3,6 +3,7 @@
     بيانات الطلب الخاص بك
 @endsection
 @section("content")
+    <title>Trx Support | order id {{ $order->order_id }}</title>
     <div class="container mt-4">
         <table class="table table-bordered">
             <tr>
@@ -62,10 +63,7 @@
 @endsection
 
 @push("scripts")
-    <script
-        src="https://code.jquery.com/jquery-3.7.1.min.js"
-        integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo="
-        crossorigin="anonymous"></script>
+
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script>
         $(".copy").click(function () {

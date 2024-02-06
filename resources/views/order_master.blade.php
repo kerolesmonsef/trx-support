@@ -6,7 +6,7 @@
     <link href="{{ asset("css/bootstrap.min.css") }}" rel="stylesheet">
 {{--  icon  --}}
     <link rel="icon" href="{{ asset("images/dark-logo.png") }}" type="image/x-icon">
-    <title>Trx</title>
+    <title>Trx Support</title>
 </head>
 <body class="" style="background-color: #131416" dir="rtl">
 
@@ -23,6 +23,12 @@
                             {{ session('error') }}
                         </div>
                     @endif
+                    {{-- show laraval validation error --}}
+                        @if($errors->any())
+                            <div class="alert alert-danger">
+                                {{ $errors->first() }}
+                            </div>
+                        @endif
 
                     @yield("content")
                 </div>
@@ -41,7 +47,10 @@
     </div>
 </div>
 
-
+<script
+    src="https://code.jquery.com/jquery-3.7.1.min.js"
+    integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo="
+    crossorigin="anonymous"></script>
 </body>
 @stack("scripts")
 </html>
