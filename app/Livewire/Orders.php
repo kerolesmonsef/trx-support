@@ -37,7 +37,10 @@ class Orders extends Component
     {
         $query = Order::query()
             ->when($this->search, function (Builder $builder) {
-                $builder->where('order_id', 'like', '%' . $this->search . '%');
+                $builder->where('order_id', 'like', '%' . $this->search . '%')
+                ->orWhereHas("coupons",function ($q){
+                    $q->where('code','like','%'.$this->search.'%');
+                });
             })
             ->withCount("coupons")
             ->orderByDesc('id');
