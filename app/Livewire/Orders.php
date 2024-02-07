@@ -133,4 +133,11 @@ class Orders extends Component
     {
         array_splice($this->coupons, $index, 1);
     }
+
+    public function resetSeen($order_id)
+    {
+        Order::find($order_id)->update([
+            'seen_at' => null
+        ]);
+    }
 }
