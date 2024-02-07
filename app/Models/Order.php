@@ -21,4 +21,9 @@ class Order extends Model
     {
         return $this->secure_phone || $this->secure_password;
     }
+
+    public function coupons_price()
+    {
+        return $this->coupons->sum("price");
+    }
 }
