@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AccountController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\OrdersController;
 use App\Http\Controllers\CaptchaController;
@@ -22,7 +23,7 @@ Route::get('captcha-refresh', [CaptchaController::class, 'refresh'])->name('capt
 
 Route::get('/', [OrdersController::class, 'welcome'])->name("welcome");
 
-Route::get("/order/check/has/security",[OrdersController::class,'check_if_order_has_security'])->name("order.check.has.security")->middleware("throttle:30,1");
+Route::get("/order/check/has/security", [OrdersController::class, 'check_if_order_has_security'])->name("order.check.has.security")->middleware("throttle:30,1");
 Route::get("order/{order_id}", [OrdersController::class, 'show'])->name("orders.show")->middleware("throttle:30,1");
 Route::get("order/security/{order_id}", [OrdersController::class, 'show_security'])->name("orders.security")->middleware("throttle:30,1");
 Route::get("order/security/validate/{order_id}", [OrdersController::class, 'validate_security'])->name("orders.security.validate")->middleware("throttle:30,1");
@@ -34,4 +35,13 @@ Auth::routes([
 ]);
 
 
-Route::get('/home', [HomeController::class, 'index'])->name('home');
+Route::middleware('auth')->group(function () {
+    Route::get('/home', [HomeController::class, 'index'])->name('home');
+    Route::get("/accounts", [AccountController::class, 'index'])->name("accounts.index");
+});
+
+
+Route::get("/artisan/migrate", function () {
+    Artisan::call('migrate');
+    return "Done";
+})->middleware("auth");

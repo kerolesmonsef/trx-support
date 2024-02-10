@@ -49,6 +49,12 @@
                                 </li>
                             @endif
                         @else
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ route("home") }}">الكوبونات</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ route("accounts.index") }}">الحسابات</a>
+                            </li>
                             <li class="nav-item dropdown">
                                 <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
                                     {{ Auth::user()->name }}
@@ -78,4 +84,6 @@
     </div>
 </body>
 @stack("scripts")
+<script src="{{ asset('js/jquery-3.7.1.min.js') }}"></script>
+<script src="{{ asset('js/bootstrap.min.js') }}"></script>
 </html>

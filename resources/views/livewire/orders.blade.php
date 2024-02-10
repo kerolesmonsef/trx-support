@@ -53,7 +53,7 @@
                     <th>تاريخ الطلب</th>
                     <th> المشاهدة</th>
                     <th>سعر الكوبونات</th>
-                    <th>Action</th>
+                    <th>فعل</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -70,7 +70,7 @@
                             <button
                                 wire:confirm="هل انت متأكد من المسح"
                                 wire:click="delete({{ $order->id }})" class="btn btn-danger btn-sm">مسح</button>
-                            <button class="btn btn-success btn-sm" wire:click="resetSeen({{ $order->id }})">اعدة تعيين المشاهدة</button>
+                            <button class="btn btn-success btn-sm" wire:click="resetSeen({{ $order->id }})">اعادة تعيين المشاهدة</button>
                         </td>
                     </tr>
                 @endforeach

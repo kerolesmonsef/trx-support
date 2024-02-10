@@ -1,3 +1,6 @@
+<?php
+/** @var $order \App\Models\Order */
+?>
 @extends("order_master")
 @section("title")
     بيانات الطلب الخاص بك
@@ -21,29 +24,62 @@
                 </tr>
             @endif
             <tr>
-                <th style="color: #fea84b" class="text-right">الكوبونات</th>
+                <th style="color: #fea84b" class="text-right">
+                    @if($order->hasAccount())
+                        الحساب
+                    @else
+                        الكوبونات
+                    @endif
+                </th>
                 <td>
                     <ul class="list-group" style="background-color: #131416">
-                        @forelse($order->coupons as $coupon)
+                        @if($order->hasAccount())
                             <li class="list-group-item" style="color: black">
-                                <span style="font-weight: bold;font-size: 20px">
-                                    {{ $loop->index + 1  }} - <span class="code">{{ $coupon->code }}</span>
-                                </span>
-                                <span class="float-start badge bg-secondary"> سعر الكوبون{{ $coupon->price }} $</span>
-                                <br>
-                                <span class="float-start badge bg-warning copy mt-2" style="cursor: pointer">نسخ الكود</span>
+                                ايميل الدخول : <span
+                                    class="code">{{ $order->account->group->username }}</span>
+                                <span class="float-start badge bg-warning copy mt-2" style="cursor: pointer">نسخ </span>
                             </li>
-                        @empty
-                            <li class="list-group-item">لا توجد كوبونات</li>
-                        @endforelse
+                            <li class="list-group-item" style="color: black">
+                                الرقم السري : <span class="code">{{ $order->account->group->password }}</span>
+                                <span class="float-start badge bg-warning copy mt-2" style="cursor: pointer">نسخ </span>
+                            </li>
+                            <li class="list-group-item" style="color: black">
+                                البروفايل : <span class="code">{{ $order->account->profile }}</span>
+                            </li>
+                        @else
+                            @forelse($order->coupons as $coupon)
+                                <li class="list-group-item" style="color: black">
+                                    <span style="font-weight: bold;font-size: 20px">
+                                        {{ $loop->index + 1  }} - <span class="code">{{ $coupon->code }}</span>
+                                    </span>
+                                    <span
+                                        class="float-start badge bg-secondary"> سعر الكوبون{{ $coupon->price }} $</span>
+                                    <br>
+                                    <span class="float-start badge bg-warning copy mt-2" style="cursor: pointer">نسخ الكود</span>
+                                </li>
+                            @empty
+                                <li class="list-group-item">لا توجد كوبونات</li>
+                            @endforelse
+                        @endif
+
                     </ul>
                 </td>
             </tr>
 
             <tr>
-                <th style="color: #fea84b" class="text-right">ملاحظات</th>
+                <th style="color: #fea84b" class="text-right">
+                    @if($order->hasAccount())
+                        الوصف
+                    @else
+                        ملاحظات
+                    @endif
+                </th>
                 <td style="color: white">
-                    {{ empty($order->note) ? "لا يوجد" : $order->note }}
+                    @if($order->hasAccount())
+                        {!!  $order->account->group->description !!}
+                    @else
+                        {{ empty($order->note) ? "لا يوجد" : $order->note }}
+                    @endif
                 </td>
             </tr>
         </table>
@@ -58,7 +94,7 @@
     font-size: 18px;" href="/" class="text-decoration-none">ادخال رقم طلب جديد</a>
     </div>
 
-{{--    jquery cdn--}}
+    {{--    jquery cdn--}}
 
 @endsection
 
