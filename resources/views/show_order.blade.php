@@ -116,5 +116,28 @@
                 timerProgressBar: true
             })
         });
+
+        $('a').click(function(event) {
+            event.preventDefault(); // Prevent the default behavior of the <a> tag
+
+            // Get the URL from the <a> tag's href attribute
+            const url = $(this).attr('href');
+
+            Swal.fire({
+                title: 'هل انت متاكد?',
+                text: 'سيتم نقلك الى صفحة ثاني هل ترغب في متابع',
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonText: 'نعم!',
+                cancelButtonText: 'لا الغاء!',
+                reverseButtons: true
+            }).then((result) => {
+                // If user confirms, proceed with the action
+                if (result.isConfirmed) {
+                    window.location.href = url;
+                }
+            });
+
+        });
     </script>
 @endpush
