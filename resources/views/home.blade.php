@@ -13,5 +13,5 @@
 @endsection
 
 @push("scripts")
-    @livewireScripts
+{{--    @livewireScripts--}}
 @endpush

@@ -112,6 +112,8 @@ class Accounts extends Component
         $this->password = $group->password;
         $this->description = $group->description;
         $this->dispatch("trix_set_value", $this->description);
+        $this->dispatch('reloadClassicEditor',$this->description);
+
 
         $this->accounts_array = $group->accounts->map(function (Account $account) {
             return [

@@ -1,7 +1,9 @@
 @extends('layouts.app')
 @push("styles")
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.7/tailwind.min.css" />
+
     @livewireStyles
+    <script src="https://cdn.ckeditor.com/ckeditor5/41.1.0/classic/ckeditor.js"></script>
+
 @endpush
 @section('content')
 <div class="container">
@@ -14,5 +16,4 @@
 @endsection
 
 @push("scripts")
-    @livewireScripts
 @endpush

@@ -23,7 +23,7 @@
                         <label for="security" style="color: #fea84b">
                             <?php
                             if ($order->secure_phone) {
-                                $text = "ادخل اخر 4 ارقام من رقم الهاتف المسجل في الطلب";
+                                $text = "سجل اخر ٤ ارقام من جوال مسجل في طلبك";
                             } else {
                                 $text = " ادخل كلمة المرور";
                             }

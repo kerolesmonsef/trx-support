@@ -27,9 +27,12 @@
             </div>
             <div class="form-group">
                 <label>
-                   الوصف
+                    الوصف
                 </label>
-                @livewire('trix', ['value' => $description])
+                <div wire:ignore>
+                    <textarea class="editor">{{ $description }}</textarea>
+                </div>
+                {{--                @livewire('trix', ['value' => $description])--}}
             </div>
             <div class="col-md-12">
                 <h2 class="text-center">الحسابات</h2>
@@ -49,34 +52,39 @@
                                     <div class="form-group">
                                         <label>
                                             رقم الطلب
-                                            <input type="text" class="form-control" wire:model.live="accounts_array.{{ $key }}.order_id">
+                                            <input type="text" class="form-control"
+                                                   wire:model.live="accounts_array.{{ $key }}.order_id">
                                         </label>
                                     </div>
 
                                     <div class="form-group">
                                         <label>
                                             رقم البروفايل
-                                            <input type="text" class="form-control" wire:model.live="accounts_array.{{ $key }}.profile">
+                                            <input type="text" class="form-control"
+                                                   wire:model.live="accounts_array.{{ $key }}.profile">
                                         </label>
                                     </div>
 
                                     <div class="form-group">
                                         <label>
                                             أضافة حماية رقم هاتف
-                                            <input type="text" class="form-control" wire:model.live="accounts_array.{{ $key }}.secure_phone">
+                                            <input type="text" class="form-control"
+                                                   wire:model.live="accounts_array.{{ $key }}.secure_phone">
                                         </label>
                                     </div>
                                     <div class="form-group">
                                         <label>
                                             ملاحظة
-                                            <input type="text" class="form-control" wire:model.live="accounts_array.{{ $key }}.note">
+                                            <input type="text" class="form-control"
+                                                   wire:model.live="accounts_array.{{ $key }}.note">
                                         </label>
                                     </div>
                                 </div>
                                 <div class="card-footer">
                                     <button class="btn btn-sm btn-danger"
                                             wire:confirm="هل انت متأكد من المسح"
-                                            wire:click="removeAccount({{ $key }})">حذف</button>
+                                            wire:click="removeAccount({{ $key }})">حذف
+                                    </button>
                                 </div>
                             </div>
                         </div>
@@ -93,3 +101,74 @@
         </div>
     </div>
 </div>
+
+@push("scripts")
+{{--    <script>--}}
+{{--           ClassicEditor--}}
+{{--               .create(document.querySelector('.editor'))--}}
+{{--               .then(editor => {--}}
+{{--                   editor.model.document.on('change:data', () => {--}}
+{{--                       const content = editor.getData();--}}
+
+{{--                   @this.set('description', content);--}}
+{{--                   });--}}
+{{--               })--}}
+{{--               .catch(error => {--}}
+{{--                   console.error(error);--}}
+{{--               });--}}
+
+
+{{--        Livewire.on('reloadClassicEditor', () => {--}}
+{{--           // here i want to reload the ckeditor please help me--}}
+{{--        })--}}
+{{--    </script>--}}
+
+<script>
+    let editorInstance; // Variable to store CKEditor instance
+
+    // Function to create CKEditor instance
+    function createEditor() {
+        return ClassicEditor
+            .create(document.querySelector('.editor'))
+            .then(editor => {
+                // Assign the editor instance to the variable
+                editorInstance = editor;
+
+                // Listen for changes in the editor content
+                editor.model.document.on('change:data', handleEditorChange);
+            })
+            .catch(error => {
+                console.error(error);
+            });
+    }
+
+    // Function to handle editor content changes
+    function handleEditorChange() {
+        const content = editorInstance.getData();
+        @this.set('description', content);
+    }
+
+    // Function to reload CKEditor instance
+    function reloadEditor(content = '') {
+        // Check if the CKEditor instance exists
+        if (editorInstance) {
+            // Destroy the CKEditor instance
+            editorInstance.destroy().then(() => {
+                // Recreate CKEditor instance
+                createEditor().then(()=>{
+                    editorInstance.setData(content);
+                });
+            });
+        }
+    }
+
+    // Create CKEditor instance when the page loads
+    createEditor();
+
+    // Listen for the 'reloadClassicEditor' event
+    Livewire.on('reloadClassicEditor', (content)=>{
+        reloadEditor(content?.[0])
+    });
+</script>
+
+@endpush
