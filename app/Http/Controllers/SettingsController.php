@@ -7,6 +7,11 @@ use Illuminate\Http\Request;
 
 class SettingsController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware("can:settings");
+    }
+
     public function index()
     {
         return view('settings');

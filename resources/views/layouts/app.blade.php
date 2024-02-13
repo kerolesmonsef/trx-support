@@ -53,15 +53,26 @@
                             </li>
                         @endif
                     @else
-                        <li class="nav-item">
-                            <a class="nav-link" href="{{ route("home") }}">الكوبونات</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="{{ route("accounts.index") }}">الحسابات</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="{{ route("settings.index") }}">الاعدادات</a>
-                        </li>
+                        @can("coupons")
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ route("coupons.index") }}">الكوبونات</a>
+                            </li>
+                        @endcan
+                        @can("accounts")
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ route("accounts.index") }}">الحسابات</a>
+                            </li>
+                        @endcan
+                        @can("settings")
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ route("settings.index") }}">الاعدادات</a>
+                            </li>
+                        @endcan
+                        @can("users")
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ route("users.index") }}">المشرفين</a>
+                            </li>
+                        @endcan
                         <li class="nav-item dropdown">
                             <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button"
                                data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
