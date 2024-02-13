@@ -52,6 +52,10 @@ Route::get("/artisan/migrate", function () {
     return "Done";
 })->middleware("auth");
 
+Route::get("/artisan/schedule/run", function () {
+    Artisan::call('schedule:run');
+    return Artisan::output();
+});
 
 Route::get("test", function () {
     $mpdf = new Mpdf(['autoLangToFont' => true]);
