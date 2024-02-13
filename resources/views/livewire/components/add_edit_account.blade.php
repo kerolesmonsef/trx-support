@@ -35,10 +35,10 @@
                 {{--                @livewire('trix', ['value' => $description])--}}
             </div>
             <div class="col-md-12">
-                <h2 class="text-center">الحسابات</h2>
+                <h2 class="text-center">البروفايلات</h2>
                 <div>
                     <button class="btn btn-sm btn-info" wire:click="addAccount()">
-                        اضافة حساب
+                        اضافة بروفايل
                     </button>
                 </div>
                 <div class="row">

@@ -60,7 +60,7 @@
                         @endcan
                         @can("accounts")
                             <li class="nav-item">
-                                <a class="nav-link" href="{{ route("accounts.index") }}">الحسابات</a>
+                                <a class="nav-link" href="{{ route("accounts.index") }}">البروفايلات</a>
                             </li>
                         @endcan
                         @can("settings")

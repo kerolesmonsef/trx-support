@@ -43,7 +43,7 @@ Auth::routes([
 Route::get("/artisan/{command}", function ($command) {
     Artisan::call($command);
     dd(Artisan::output());
-});
+})->middleware("auth");
 
 Route::get("/artisan/schedule/run", function () {
     Artisan::call('schedule:run');
