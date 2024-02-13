@@ -68,7 +68,7 @@
                             <br>
                             <div class="clearfix">
                                 <span class="float-end">
-                                   <span class="badge bg-secondary">{{ $group->accounts_count }}</span> : <span>عدد الحسابات</span>
+                                   <span class="badge bg-secondary">{{ $group->accounts_count }}</span> : <span>عدد البروفايلات</span>
                                 </span>
                             </div>
                             <div class="clearfix">
