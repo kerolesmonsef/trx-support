@@ -1,3 +1,7 @@
+@php use Carbon\Carbon; @endphp
+<?php
+/** @var $group \App\Models\Group */
+?>
 <div>
 
     @include("livewire.components.add_edit_account")
@@ -60,22 +64,54 @@
                                 <i class="fa fa-edit"></i>
                                 تعديل المجموعة
                             </button>
+                            <hr>
+                            <br>
+                            <div class="clearfix">
+                                <span class="float-end">
+                                   <span class="badge bg-secondary">{{ $group->accounts_count }}</span> : <span>عدد الحسابات</span>
+                                </span>
+                            </div>
+                            <div class="clearfix">
+                                <span class="float-end">
+                                     <span class="badge bg-secondary">{{ $group->username }}</span> : <span>البريد الالكتروني</span>
+                                </span>
+                            </div>
+                            <div class="clearfix">
+                                <span class="float-end">
+                                    <span
+                                        class="badge bg-secondary">{{ $group->password }}</span> : <span>الرقم السري </span>
+                                </span>
+                            </div>
+                            <div class="clearfix">
+                                <span class="float-end">
+                                    <span
+                                        class="badge bg-secondary">{{ Carbon::parse($group->updated_at)->diffForHumans() }}</span> : <span>اخر تحديث</span>
+                                </span>
+                            </div>
                         </div>
                         <div class="card-body">
-                           <table class="table">
-                            <tr>
-                                <th>رقم الطلب</th>
-                                <th>تاريخ الطلب</th>
-                                <th> المشاهدة</th>
-                            </tr>
+                            <table class="table">
+                                <tr>
+                                    <th>رقم الطلب</th>
+                                    <th>تاريخ الطلب</th>
+                                    <th>رقم البروفايل</th>
+                                    <th> ملاحظات</th>
+                                    <th> المشاهدة</th>
+                                    <th> تاريخ اخر تحديث</th>
+                                </tr>
                                 @foreach ($group->accounts as $account)
                                     <tr>
                                         <td>{{ $account->order->order_id }}</td>
                                         <td>{{ $account->order->created_at }}</td>
+                                        <td>{{ $account->profile }}</td>
+                                        <td>{{ $account->order->note }}</td>
+                                        <td>{{ $account->order->note }}</td>
                                         <td>{{ $account->order->seen_at }}</td>
+                                        <td>{{ $account->order->updated_at }}</td>
+
                                     </tr>
-                               @endforeach
-                           </table>
+                                @endforeach
+                            </table>
                         </div>
                     </div>
                 @endforeach

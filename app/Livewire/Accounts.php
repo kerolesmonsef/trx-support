@@ -47,6 +47,7 @@ class Accounts extends Component
     {
         $query = Group::query()
             ->with("accounts.order")
+            ->withCount("accounts")
             ->orderBy('id', 'desc')
             ->where(function (Builder $query) {
                 $query->where("name", "like", "%{$this->search}%")

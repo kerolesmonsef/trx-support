@@ -36,7 +36,7 @@ class Orders extends Component
     protected function getOrders()
     {
         $query = Order::query()
-            ->with("coupons")
+            ->withWhereHas("coupons")
             ->when($this->search, function (Builder $builder) {
                 $builder->where('order_id', 'like', '%' . $this->search . '%')
                     ->orWhereHas("coupons", function ($q) {

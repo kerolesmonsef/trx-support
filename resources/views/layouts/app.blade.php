@@ -13,6 +13,8 @@
     <link rel="dns-prefetch" href="//fonts.bunny.net">
     <link href="https://fonts.bunny.net/css?family=Nunito" rel="stylesheet">
     <link href="{{ asset("css/bootstrap.min.css") }}" rel="stylesheet">
+    <link rel="icon" href="{{ asset("images/dark-logo.png") }}" type="image/x-icon">
+
     <!-- Scripts -->
     @stack("styles")
 </head>
@@ -56,6 +58,9 @@
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="{{ route("accounts.index") }}">الحسابات</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ route("settings.index") }}">الاعدادات</a>
                         </li>
                         <li class="nav-item dropdown">
                             <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button"

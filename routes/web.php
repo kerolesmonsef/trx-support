@@ -4,8 +4,10 @@ use App\Http\Controllers\AccountController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\OrdersController;
 use App\Http\Controllers\CaptchaController;
+use App\Http\Controllers\SettingsController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
+use Mpdf\Mpdf;
 
 /*
 |--------------------------------------------------------------------------
@@ -28,6 +30,10 @@ Route::get("order/{order_id}", [OrdersController::class, 'show'])->name("orders.
 Route::get("order/security/{order_id}", [OrdersController::class, 'show_security'])->name("orders.security")->middleware("throttle:30,1");
 Route::get("order/security/validate/{order_id}", [OrdersController::class, 'validate_security'])->name("orders.security.validate")->middleware("throttle:30,1");
 
+Route::get("settings", [SettingsController::class, 'index'])->name("settings.index");
+Route::post("settings", [SettingsController::class, 'update'])->name("settings.update");
+
+
 Auth::routes([
     'register' => false,
     'reset' => false,
@@ -45,3 +51,17 @@ Route::get("/artisan/migrate", function () {
     Artisan::call('migrate');
     return "Done";
 })->middleware("auth");
+
+
+Route::get("test", function () {
+    $mpdf = new Mpdf(['autoLangToFont' => true]);
+
+    $mpdf->WriteHTML('<div >
+    <span lang="zh">세계를 </span>
+    <span lang="ko">에 대하여</span>,
+    <span lang="ko"> 너와 나, </span>
+    <span lang="ar">العربية</span>
+</div>');
+
+    $mpdf->Output();
+});

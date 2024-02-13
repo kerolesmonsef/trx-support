@@ -1,3 +1,4 @@
+@php use App\Models\Settings; @endphp
 <?php
 /** @var $order \App\Models\Order */
 ?>
@@ -84,6 +85,16 @@
             </tr>
         </table>
 
+        <h5 style="color: #fea84b" class="card-title text-center">السياسة والشروط</h5>
+        <div style="color: white">
+            @if($order->hasAccount())
+                {!! Settings::valueByKey('account_privacy_policy') !!}
+            @else
+                {!! Settings::valueByKey('coupon_privacy_policy') !!}
+            @endif
+        </div>
+
+
         <a style="display: block;
     text-align: center;
     margin-top: 32px;
@@ -117,7 +128,7 @@
             })
         });
 
-        $('a').click(function(event) {
+        $('a').click(function (event) {
             event.preventDefault(); // Prevent the default behavior of the <a> tag
 
             // Get the URL from the <a> tag's href attribute
