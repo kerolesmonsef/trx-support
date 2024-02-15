@@ -37,7 +37,7 @@
                         @if($order->hasAccount())
                             <li class="list-group-item" style="color: black">
                                 ايميل الدخول : <span
-                                    class="code">{{ $order->account->group->username }}</span>
+                                        class="code">{{ $order->account->group->username }}</span>
                                 <span class="float-start badge bg-warning copy mt-2" style="cursor: pointer">نسخ </span>
                             </li>
                             <li class="list-group-item" style="color: black">
@@ -54,7 +54,7 @@
                                         {{ $loop->index + 1  }} - <span class="code">{{ $coupon->code }}</span>
                                     </span>
                                     <span
-                                        class="float-start badge bg-secondary"> سعر الكوبون{{ $coupon->price }} $</span>
+                                            class="float-start badge bg-secondary"> سعر الكوبون{{ $coupon->price }} $</span>
                                     <br>
                                     <span class="float-start badge bg-warning copy mt-2" style="cursor: pointer">نسخ الكود</span>
                                 </li>
@@ -71,8 +71,16 @@
                 <tr>
                     <th style="color: #fea84b" class="text-right">التحذير</th>
                     <td>
+                        @if($order->warning_rank == 1)
                             <span class="text-white">لديك تحزير من الدرجة</span>
-                            <span class="badge bg-danger">{{ $order->warning_rank }}</span>
+                            <span class="badge " style="background-color: yellow">1</span>
+                        @elseif($order->warning_rank == 2)
+                            <span class="text-white">لديك تحزير من الدرجة</span>
+                            <span class="badge bg-warning">2</span>
+                        @elseif($order->warning_rank == 3)
+                            <span class="text-white">لديك تحزير من الدرجة</span>
+                            <span class="badge bg-danger">3</span>
+                        @endif
                         <span class="badge bg-secondary">
                             {{ $order->warning_message }}
                         </span>
