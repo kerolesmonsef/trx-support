@@ -67,6 +67,19 @@
                 </td>
             </tr>
 
+            @if($order->warning_rank > 0)
+                <tr>
+                    <th style="color: #fea84b" class="text-right">التحذير</th>
+                    <td>
+                            <span class="text-white">لديك تحزير من الدرجة</span>
+                            <span class="badge bg-danger">{{ $order->warning_rank }}</span>
+                        <span class="badge bg-secondary">
+                            {{ $order->warning_message }}
+                        </span>
+                    </td>
+                </tr>
+            @endif
+
             <tr>
                 <th style="color: #fea84b" class="text-right">
                     @if($order->hasAccount())

@@ -79,6 +79,37 @@
                                                    wire:model.live="accounts_array.{{ $key }}.note">
                                         </label>
                                     </div>
+                                    <hr>
+                                    <div class="form-group">
+                                        <label>
+                                            درجة التحزير
+                                                <?php
+                                                $color = "black";
+                                                if ($account['warning_rank'] == 1) {
+                                                    $color = "yellow";
+                                                }elseif ($account['warning_rank'] == 2) {
+                                                    $color = "orange";
+                                                }elseif ($account['warning_rank'] == 3) {
+                                                    $color = "red";
+                                                }
+                                                ?>
+                                            <span style="background-color: {{ $color }}">||||||||||||</span>
+                                        </label>
+                                        <select wire:model.live="accounts_array.{{ $key }}.warning_rank"
+                                                class="form-control">
+                                            <option value="">لايوجد</option>
+                                            <option style="background: yellow" value="1">درجة 1</option>
+                                            <option style="background: orange" value="2">درجة 2</option>
+                                            <option style="background: red;" value="3">درجة 3</option>
+                                        </select>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label>
+                                            رسالة التحزير
+                                        </label>
+                                        <input wire:model.live="accounts_array.{{ $key }}.warning_message" class="form-control">
+                                    </div>
                                 </div>
                                 <div class="card-footer">
                                     <button class="btn btn-sm btn-danger"

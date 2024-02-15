@@ -81,6 +81,8 @@ class Accounts extends Component
             'secure_phone' => '',
             'note' => '',
             'profile' => '',
+            'warning_rank' => '',
+            'warning_message' => '',
         ];
     }
 
@@ -113,7 +115,7 @@ class Accounts extends Component
         $this->password = $group->password;
         $this->description = $group->description;
         $this->dispatch("trix_set_value", $this->description);
-        $this->dispatch('reloadClassicEditor',$this->description);
+        $this->dispatch('reloadClassicEditor', $this->description);
 
 
         $this->accounts_array = $group->accounts->map(function (Account $account) {
@@ -123,6 +125,8 @@ class Accounts extends Component
                 'secure_phone' => $account->order->secure_phone,
                 'note' => $account->order->note,
                 'profile' => $account->profile,
+                'warning_rank' => $account->order->warning_rank,
+                'warning_message' => $account->order->warning_message,
             ];
         })->toArray();
 
@@ -168,6 +172,8 @@ class Accounts extends Component
                 'order_id' => $account_array['order_id'],
                 'secure_phone' => $account_array['secure_phone'],
                 'note' => $account_array['note'],
+                'warning_rank' => $account_array['warning_rank'] ?: null,
+                'warning_message' => $account_array['warning_message'],
             ]);
         }
         session()->flash('message', 'تم الحفظ بنجاح');

@@ -7,6 +7,7 @@
 {{--  icon  --}}
     <link rel="icon" href="{{ asset("images/dark-logo.png") }}" type="image/x-icon">
     <title>Trx Support</title>
+    @stack("styles")
 </head>
 <body class="" style="background-color: #131416" dir="rtl">
 

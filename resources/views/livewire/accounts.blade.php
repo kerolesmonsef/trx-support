@@ -50,7 +50,7 @@
                 </div>
             </div>
 
-            <div class="container">
+            <div class="container mt-3">
                 <div class="row">
                     <div class="accordion" wire:ignore>
                         @foreach ($groups as $group)
@@ -58,8 +58,8 @@
 
                             <div class="accordion-item mb-4 card border border-dark">
                                 <div class="accordion-header" id="headingOne">
-                                    <div class="overflow-hidden pt-1" data-bs-toggle="collapse" data-bs-target="#{{ $accordion_id }}" aria-expanded="true">
-                                        <h1 style="cursor: pointer;display: inline">{{ $group->id }} - {{ $group->name }}</h1>
+                                    <div class="overflow-hidden pt-1" >
+                                        <h1 data-bs-toggle="collapse" data-bs-target="#{{ $accordion_id }}" style="cursor: pointer;display: inline">{{ $group->id }} - {{ $group->name }}</h1>
                                         <button wire:confirm="هل انت متأكد من الحذف" wire:click="removeGroup({{ $group->id }})" class="btn btn-danger float-end m-1">
                                             <i class="fa fa-trash"></i> حذف المجموعة
                                         </button>
