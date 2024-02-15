@@ -18,6 +18,7 @@ return new class extends Migration {
             $table->foreignIdFor(ComplainType::class)->constrained();
             $table->text('description');
             $table->enum('status', ['pending', 'solved', 'not_solved'])->default("pending");
+
             $table->timestamps();
             $table->softDeletes();
         });
