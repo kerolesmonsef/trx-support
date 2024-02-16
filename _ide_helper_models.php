@@ -55,6 +55,18 @@ namespace App\Models{
 
 namespace App\Models{
 /**
+ * App\Models\ComplainType
+ *
+ * @method static \Illuminate\Database\Eloquent\Builder|ComplainType newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|ComplainType newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|ComplainType query()
+ * @mixin \Eloquent
+ */
+	class IdeHelperComplainType {}
+}
+
+namespace App\Models{
+/**
  * App\Models\Coupon
  *
  * @property int $id
@@ -146,6 +158,23 @@ namespace App\Models{
  * @mixin \Eloquent
  */
 	class IdeHelperOrder {}
+}
+
+namespace App\Models{
+/**
+ * App\Models\OrderComplain
+ *
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \Spatie\Activitylog\Models\Activity> $activities
+ * @property-read int|null $activities_count
+ * @method static \Illuminate\Database\Eloquent\Builder|OrderComplain newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|OrderComplain newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|OrderComplain onlyTrashed()
+ * @method static \Illuminate\Database\Eloquent\Builder|OrderComplain query()
+ * @method static \Illuminate\Database\Eloquent\Builder|OrderComplain withTrashed()
+ * @method static \Illuminate\Database\Eloquent\Builder|OrderComplain withoutTrashed()
+ * @mixin \Eloquent
+ */
+	class IdeHelperOrderComplain {}
 }
 
 namespace App\Models{

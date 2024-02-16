@@ -22,18 +22,16 @@
                     <div class="form-group">
                         <label for="security" style="color: #fea84b">
                             <?php
-                            if ($order->secure_phone) {
-                                $text = "سجل اخر ٤ ارقام من جوال مسجل في طلبك";
-                            } else {
-                                $text = " ادخل كلمة المرور";
-                            }
+                            $text = "سجل اخر ٤ ارقام من جوال مسجل في طلبك";
                             ?>
                             {{ $text }}
                         </label>
                         <input
                                 style="background: black;border: 1px solid #fea84b;color: #fea84b;"
-                                type="text" class="form-control" id="security" name="security"
+                                type="text"  class="form-control" id="security" name="security"
+                                pattern="[0-9]{4}"
                                 placeholder="{{ $text }}"
+                                oninput="validateInput(this)"
                                 value="">
                     </div>
                     <div class="form-group">
@@ -45,6 +43,15 @@
 
         <a style="" href="/" class="text-decoration-none border-button">ادخال رقم طلب جديد</a>
     </div>
+<script>
+    function validateInput(inputElement) {
+        // Remove any non-numeric characters
+        inputElement.value = inputElement.value.replace(/\D/g, '');
 
+        if (inputElement.value.length > 4) {
+            inputElement.value = inputElement.value.substring(0, 4);
+        }
+    }
+</script>
 @endsection
 

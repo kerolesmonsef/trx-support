@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AccountController;
+use App\Http\Controllers\AdminComplainController;
 use App\Http\Controllers\CouponsController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\OrdersController;
@@ -56,5 +57,6 @@ Route::middleware('auth')->group(function () {
     Route::get("/accounts", [AccountController::class, 'index'])->name("accounts.index");
     Route::get("settings", [SettingsController::class, 'index'])->name("settings.index");
     Route::post("settings", [SettingsController::class, 'update'])->name("settings.update");
+    Route::get("complains", [AdminComplainController::class, 'index'])->name("complains.index");
     Route::resource("users", UserController::class);
 });

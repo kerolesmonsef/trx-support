@@ -31,6 +31,10 @@ class PermissionSeeder extends Seeder
             [
                 'name' => 'settings',
                 'name_ar' => 'الاعدادات',
+            ],
+            [
+                'name' => 'complains',
+                'name_ar' => 'الشكاوى',
             ]
         ];
         /** @var Role $role */
