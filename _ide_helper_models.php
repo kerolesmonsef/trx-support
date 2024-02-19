@@ -57,9 +57,26 @@ namespace App\Models{
 /**
  * App\Models\ComplainType
  *
+ * @property int $id
+ * @property string $name
+ * @property \Illuminate\Support\Carbon|null $created_at
+ * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property \Illuminate\Support\Carbon|null $deleted_at
+ * @property string $type
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \Spatie\Activitylog\Models\Activity> $activities
+ * @property-read int|null $activities_count
  * @method static \Illuminate\Database\Eloquent\Builder|ComplainType newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|ComplainType newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|ComplainType onlyTrashed()
  * @method static \Illuminate\Database\Eloquent\Builder|ComplainType query()
+ * @method static \Illuminate\Database\Eloquent\Builder|ComplainType whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|ComplainType whereDeletedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|ComplainType whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|ComplainType whereName($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|ComplainType whereType($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|ComplainType whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|ComplainType withTrashed()
+ * @method static \Illuminate\Database\Eloquent\Builder|ComplainType withoutTrashed()
  * @mixin \Eloquent
  */
 	class IdeHelperComplainType {}
@@ -139,6 +156,8 @@ namespace App\Models{
  * @property-read \App\Models\Account|null $account
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \Spatie\Activitylog\Models\Activity> $activities
  * @property-read int|null $activities_count
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\OrderComplain> $complains
+ * @property-read int|null $complains_count
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Coupon> $coupons
  * @property-read int|null $coupons_count
  * @method static \Illuminate\Database\Eloquent\Builder|Order newModelQuery()
@@ -164,12 +183,30 @@ namespace App\Models{
 /**
  * App\Models\OrderComplain
  *
+ * @property int $id
+ * @property int $order_id
+ * @property int $complain_type_id
+ * @property string $description
+ * @property string $status
+ * @property \Illuminate\Support\Carbon|null $created_at
+ * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property \Illuminate\Support\Carbon|null $deleted_at
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \Spatie\Activitylog\Models\Activity> $activities
  * @property-read int|null $activities_count
+ * @property-read \App\Models\Order $order
+ * @property-read \App\Models\ComplainType $type
  * @method static \Illuminate\Database\Eloquent\Builder|OrderComplain newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|OrderComplain newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|OrderComplain onlyTrashed()
  * @method static \Illuminate\Database\Eloquent\Builder|OrderComplain query()
+ * @method static \Illuminate\Database\Eloquent\Builder|OrderComplain whereComplainTypeId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|OrderComplain whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|OrderComplain whereDeletedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|OrderComplain whereDescription($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|OrderComplain whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|OrderComplain whereOrderId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|OrderComplain whereStatus($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|OrderComplain whereUpdatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|OrderComplain withTrashed()
  * @method static \Illuminate\Database\Eloquent\Builder|OrderComplain withoutTrashed()
  * @mixin \Eloquent

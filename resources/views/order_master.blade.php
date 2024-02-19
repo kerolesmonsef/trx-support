@@ -4,14 +4,14 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link href="{{ asset("css/bootstrap.min.css") }}" rel="stylesheet">
-{{--  icon  --}}
+    {{--  icon  --}}
     <link rel="icon" href="{{ asset("images/dark-logo.png") }}" type="image/x-icon">
     <title>Trx Support</title>
     @stack("styles")
 </head>
 <body class="" style="background-color: #131416" dir="rtl">
 
-<div class="container" >
+<div class="container">
     <div class="row mt-5">
         <div class="col-md-6">
             <div class="">
@@ -19,18 +19,22 @@
                     <h1 class="mb-0 " style="color: #fea84b">@yield("title")</h1>
                 </div>
                 <div class="">
-                    @if (session()->has('error'))
+                    @if (session('error'))
                         <div class="alert alert-danger">
                             {{ session('error') }}
                         </div>
+                    @elseif($errors->first())
+                        <div class="alert alert-danger">
+                            {{ $errors->first() }}
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                        </div>
                     @endif
-                    {{-- show laraval validation error --}}
-                        @if($errors->any())
-                            <div class="alert alert-danger">
-                                {{ $errors->first() }}
-                            </div>
-                        @endif
-
+                    @if (session()->has('success'))
+                        <div class="alert alert-success">
+                            {{ session('success') }}
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                        </div>
+                    @endif
                     @yield("content")
                 </div>
             </div>
@@ -41,7 +45,7 @@
                 <img style="width: 140px;" src="{{ asset("/images/logo.png") }}" class="m-2">
             </div>
             <div class="text-start">
-                <img  src="{{ asset("/images/hello.png") }}" class="m-2">
+                <img src="{{ asset("/images/hello.png") }}" class="m-2">
             </div>
         </div>
 
@@ -54,4 +58,16 @@
     crossorigin="anonymous"></script>
 </body>
 @stack("scripts")
+<script>
+    $(".reload-captcha").click(function () {
+        // send ajax request to refresh captcha
+        $.ajax({
+            url: "{{ route("captcha.refresh") }}",
+            type: "GET",
+            success: function (response) {
+                $("#captcha-image").html(response.captcha);
+            }
+        });
+    });
+</script>
 </html>

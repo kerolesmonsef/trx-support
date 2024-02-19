@@ -13,5 +13,32 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class OrderComplain extends Model
 {
     use HasFactory, SoftDeletes, SLogActivity;
+
     protected $guarded = [];
+
+    public function order()
+    {
+        return $this->belongsTo(Order::class);
+    }
+
+
+    public function type()
+    {
+        return $this->belongsTo(ComplainType::class, 'complain_type_id')->withTrashed();
+    }
+
+    public function isPending(): bool
+    {
+        return $this->status == 'pending';
+    }
+
+    public function isSolved(): bool
+    {
+        return $this->status == 'solved';
+    }
+
+    public function notSolved(): bool
+    {
+        return $this->status == 'not_solved';
+    }
 }

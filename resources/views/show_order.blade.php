@@ -1,8 +1,34 @@
 @php use App\Models\Settings; @endphp
 <?php
 /** @var $order \App\Models\Order */
+$complainTypes = \App\Models\ComplainType::query();
+if ($order->hasAccount()) {
+    $complainTypes->where("type", "account");
+} else {
+    $complainTypes->where("type", "coupon");
+}
+$complainTypes = $complainTypes->get();
 ?>
 @extends("order_master")
+@push("styles")
+    <style>
+        .w-color {
+            color: #fea84b
+        }
+
+        .complain-input {
+            background-color: #131416;
+            color: #fea84b;
+            border: 1px solid #fea84b;
+        }
+
+        .complain-input:focus {
+            background-color: #131416;
+            color: #fea84b;
+        }
+    </style>
+@endpush
+
 @section("title")
     بيانات الطلب الخاص بك
 @endsection
@@ -11,12 +37,12 @@
     <div class="container mt-4">
         <table class="table table-bordered">
             <tr>
-                <th style="color: #fea84b" class="text-right">رقم الطلب</th>
+                <th class="text-right w-color">رقم الطلب</th>
                 <td style="color: white">{{$order->order_id}}</td>
             </tr>
             @if($order->price)
                 <tr>
-                    <th style="color: #fea84b" class="text-right">سعر الطلب</th>
+                    <th class="text-right w-color">سعر الطلب</th>
                     <td>
                         <span class="badge bg-secondary ">
                                 {{ $order->price }} $
@@ -25,7 +51,7 @@
                 </tr>
             @endif
             <tr>
-                <th style="color: #fea84b" class="text-right">
+                <th class="text-right w-color">
                     @if($order->hasAccount())
                         الحساب
                     @else
@@ -69,7 +95,7 @@
 
             @if($order->warning_rank > 0)
                 <tr>
-                    <th style="color: #fea84b" class="text-right">التحذير</th>
+                    <th class="text-right w-color">التحذير</th>
                     <td>
                         @if($order->warning_rank == 1)
                             <span class="text-white">لديك تحزير من الدرجة</span>
@@ -89,7 +115,7 @@
             @endif
 
             <tr>
-                <th style="color: #fea84b" class="text-right">
+                <th class="text-right w-color">
                     @if($order->hasAccount())
                         الوصف
                     @else
@@ -106,7 +132,7 @@
             </tr>
         </table>
 
-        <h5 style="color: #fea84b" class="card-title text-center">السياسة والشروط</h5>
+        <h5 class="card-title text-center w-color">السياسة والشروط</h5>
         <div style="color: white">
             @if($order->hasAccount())
                 {!! Settings::valueByKey('account_privacy_policy') !!}
@@ -124,6 +150,16 @@
     color: #fea84b;
     padding: 14px;
     font-size: 18px;" href="/" class="text-decoration-none">ادخال رقم طلب جديد</a>
+
+        @if($order->hasPendingComplain())
+            <p class="w-color">لديك تذكرة قيد الانتظار برجاء الانتظار و سوف يتم التواصل معك خلال 48 ساعة</p>
+        @else
+            @include("components.client_complain_modal")
+        @endif
+        @if($order->complains()->exists())
+            @include("components.client_old_complains")
+        @endif
+
     </div>
 
     {{--    jquery cdn--}}
@@ -131,9 +167,22 @@
 @endsection
 
 @push("scripts")
-
+    <script src="{{ asset('js/bootstrap.min.js') }}"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script>
+        $(document).ready(function () {
+            const max_chars = 100;
+            const descriptionObject = $(".complain-description");
+
+            $(".description-char-count").text(max_chars - descriptionObject.val().length);
+            descriptionObject.on("input", function () {
+                const current_allowed_length =max_chars -  $(this).val().length;
+                $(".description-char-count").text( current_allowed_length);
+                if (current_allowed_length <= 1) {
+                    $(this).val($(this).val().slice(0, max_chars));
+                }
+            });
+        });
         $(".copy").click(function () {
             let code = $(this).parent().find(".code").text();
             navigator.clipboard.writeText(code);

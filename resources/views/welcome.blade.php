@@ -28,9 +28,9 @@
                     <span id="captcha-image">
                         {!!  captcha_img()  !!}
                     </span>
-                    <button id="reload-captcha" type="button"
+                    <button type="button"
                             style="background: #fea84b;padding: 3px 15px;;font-weight: bold;font-size: 15px;"
-                            class="btn ">اعادة تحميل
+                            class="btn reload-captcha">اعادة تحميل
                     </button>
                 </div>
             </div>
@@ -41,17 +41,4 @@
         </button>
     </form>
 @endsection
-@push("scripts")
-    <script>
-        $("#reload-captcha").click(function () {
-            // send ajax request to refresh captcha
-            $.ajax({
-                url: "{{ route("captcha.refresh") }}",
-                type: "GET",
-                success: function (response) {
-                    $("#captcha-image").html(response.captcha);
-                }
-            });
-        });
-    </script>
-@endpush
+

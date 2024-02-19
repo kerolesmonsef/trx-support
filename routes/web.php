@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AccountController;
 use App\Http\Controllers\AdminComplainController;
+use App\Http\Controllers\ComplainController;
 use App\Http\Controllers\CouponsController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\OrdersController;
@@ -32,7 +33,7 @@ Route::get("/order/check/has/security", [OrdersController::class, 'check_if_orde
 Route::get("order/{order_id}", [OrdersController::class, 'show'])->name("orders.show")->middleware("throttle:30,1");
 Route::get("order/security/{order_id}", [OrdersController::class, 'show_security'])->name("orders.security")->middleware("throttle:30,1");
 Route::get("order/security/validate/{order_id}", [OrdersController::class, 'validate_security'])->name("orders.security.validate")->middleware("throttle:30,1");
-
+Route::post("complain/{order}/store", [ComplainController::class, 'store'])->name("client.complain.store");
 
 Auth::routes([
     'register' => false,
