@@ -19,14 +19,14 @@ class Order extends Model
 
     protected $guarded = [];
 
-    public static function findByOrderId($order_id): ?Model
+    public static function findByOrderId($order_id): null|Model|Order
     {
         return self::where("order_id", $order_id)->first();
     }
 
     public function complains(): HasMany
     {
-        return $this->hasMany(OrderComplain::class,'order_id');
+        return $this->hasMany(OrderComplain::class, 'order_id');
     }
 
     public function hasPendingComplain(): bool

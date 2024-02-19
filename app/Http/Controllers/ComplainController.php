@@ -25,6 +25,11 @@ class ComplainController extends Controller
         ]);
 
         $order = Order::findByOrderId(request('order_id'));
+
+        if ($order->hasPendingComplain()){
+            return redirect()->back()->with('error', 'لقد قمت بإرسال الشكوى من قبل');
+        }
+
         OrderComplain::create([
             'order_id' => $order->id,
             'complain_type_id' => request('complain_type_id'),
