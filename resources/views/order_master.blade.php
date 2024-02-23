@@ -4,6 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link href="{{ asset("css/bootstrap.min.css") }}" rel="stylesheet">
+    <link href="{{ asset("css/main_style.css") }}" rel="stylesheet">
     {{--  icon  --}}
     <link rel="icon" href="{{ asset("images/dark-logo.png") }}" type="image/x-icon">
     <title>Trx Support</title>
@@ -53,10 +54,12 @@
 </div>
 
 <script
-    src="https://code.jquery.com/jquery-3.7.1.min.js"
+    src="{{ asset("js/jquery-3.7.1.min.js") }}"
     integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo="
     crossorigin="anonymous"></script>
 </body>
+<script src="{{ asset("js/sweetalert2@11.js") }}"></script>
+
 @stack("scripts")
 <script>
     $(".reload-captcha").click(function () {
@@ -69,5 +72,17 @@
             }
         });
     });
+
+    @if (session('error_pup_up'))
+        Swal.fire({
+            title: 'حدث خطء',
+            text: '{{ session('error_pup_up') }}',
+            icon: 'error',
+            //showCancelButton: true,
+            confirmButtonText: 'حسنا',
+            //cancelButtonText: 'لا الغاء!',
+            reverseButtons: true
+        });
+    @endif
 </script>
 </html>

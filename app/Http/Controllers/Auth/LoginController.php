@@ -38,6 +38,7 @@ class LoginController extends Controller
         $this->middleware('guest')->except('logout');
     }
 
+
     public function login(Request $request)
     {
         $this->validateLogin($request);
@@ -69,5 +70,18 @@ class LoginController extends Controller
         $this->incrementLoginAttempts($request);
 
         return $this->sendFailedLoginResponse($request);
+    }
+
+    protected function validateLogin(Request $request)
+    {
+
+        $request->validate([
+            'captcha' => 'required|captcha',
+            $this->username() => 'required|string',
+            'password' => 'required|string',
+        ], [
+            'captcha.required' => "من فضلك ادخل الرمز بشكل صحيح",
+            "captcha.captcha" => "الرمز الذي قمت بادخاله غير صحيح",
+        ]);
     }
 }

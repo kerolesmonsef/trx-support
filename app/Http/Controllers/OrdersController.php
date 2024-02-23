@@ -23,6 +23,10 @@ class OrdersController extends Controller
             return redirect()->to("/")->with("error", "رقم الطلب خاطئ");
         }
 
+        if ($order->hasAccount() and $order->account->isSubscriptionExpired()) {
+            return redirect()->to("/")->withInput(['order_id' => $order_id])->with("error_pup_up", " تم انتهاء اشتراكك ولايمكنك دخول الى طلبك");
+        }
+
         Helper::validateCaptcha($order_id);
 
         if (!$order->hasSecurity()) {
@@ -78,6 +82,8 @@ class OrdersController extends Controller
             return redirect()->to("/")->with("error", "رقم الطلب خاطئ");
         }
 
+
+        $order->timestamps = false;
         if ($order->hasSecurity()) {
             return redirect()->route("orders.security", ["order_id" => $order_id]);
         }
@@ -85,6 +91,8 @@ class OrdersController extends Controller
         $order->update([
             'seen_at' => now()
         ]);
+
+        $order->touch();
 
         return view('show_order', compact('order'));
     }

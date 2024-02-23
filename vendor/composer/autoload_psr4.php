@@ -67,6 +67,7 @@ return array(
     'Mockery\\' => array($vendorDir . '/mockery/mockery/library/Mockery'),
     'Mews\\Captcha\\' => array($vendorDir . '/mews/captcha/src'),
     'Livewire\\' => array($vendorDir . '/livewire/livewire/src'),
+    'LivewireUI\\Modal\\' => array($vendorDir . '/wire-elements/modal/src'),
     'League\\MimeTypeDetection\\' => array($vendorDir . '/league/mime-type-detection/src'),
     'League\\Flysystem\\Local\\' => array($vendorDir . '/league/flysystem-local'),
     'League\\Flysystem\\' => array($vendorDir . '/league/flysystem/src'),

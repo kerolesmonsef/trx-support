@@ -39,19 +39,33 @@
                             </div>
                         </div>
 
-                        <div class="row mb-3">
-                            <div class="col-md-6 offset-md-4">
-                                <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" name="remember" id="remember" {{ old('remember') ? 'checked' : '' }}>
-
-                                    <label class="form-check-label" for="remember">
-                                        {{ __('Remember Me') }}
+                        <div class="row">
+                            <div class="col-md-7">
+                                <div class="form-group">
+                                    <label style="color: gray" for="order_id" class="font-weight-bold">
+                                        من فضلك ادخل الكود التالي
                                     </label>
+                                    <input type="text" class="form-control" name="captcha"
+                                           placeholder="الرمز" required>
+                                </div>
+                            </div>
+                            <div class="col-md-5">
+                                <label style="color: gray" for="order_id" class="font-weight-bold">
+                                    الرمز
+                                </label>
+                                <div class="">
+                                <span id="captcha-image">
+                                    {!!  captcha_img()  !!}
+                                </span>
+                                    <button type="button"
+                                            style="background: #fea84b;padding: 3px 15px;;font-weight: bold;font-size: 15px;"
+                                            class="btn reload-captcha">اعادة تحميل
+                                    </button>
                                 </div>
                             </div>
                         </div>
 
-                        <div class="row mb-0">
+                        <div class="row mb-0 mt-2">
                             <div class="col-md-8 offset-md-4">
                                 <button type="submit" class="btn btn-primary">
                                     {{ __('Login') }}
@@ -71,3 +85,18 @@
     </div>
 </div>
 @endsection
+
+@push("scripts")
+    <script>
+        $(".reload-captcha").click(function () {
+            // send ajax request to refresh captcha
+            $.ajax({
+                url: "{{ route("captcha.refresh") }}",
+                type: "GET",
+                success: function (response) {
+                    $("#captcha-image").html(response.captcha);
+                }
+            });
+        });
+    </script>
+@endpush

@@ -113,4 +113,11 @@
       0 => 'Spatie\\Permission\\PermissionServiceProvider',
     ),
   ),
+  'wire-elements/modal' => 
+  array (
+    'providers' => 
+    array (
+      0 => 'LivewireUI\\Modal\\LivewireModalServiceProvider',
+    ),
+  ),
 );

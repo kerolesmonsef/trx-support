@@ -39,6 +39,11 @@ class Order extends Model
         return $this->hasMany(Coupon::class);
     }
 
+    public function notes(): HasMany
+    {
+        return $this->hasMany(OrderNote::class);
+    }
+
     public function hasSecurity(): bool
     {
         return $this->secure_phone || $this->secure_password;
@@ -62,5 +67,13 @@ class Order extends Model
     public function hasCoupons(): bool
     {
         return $this->coupons->isNotEmpty();
+    }
+
+    public function lastNoteUserName(): string
+    {
+        if ($this->notes->isNotEmpty()) {
+            return $this->notes->last()->user->name;
+        }
+        return "";
     }
 }

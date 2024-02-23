@@ -44,38 +44,41 @@
                     </select>
                 </div>
             </div>
-            <table class="table table-bordered mt-5">
-                <thead>
-                <tr>
-                    <th>تسلسل.</th>
-                    <th>رقم الطلب</th>
-                    <th>عدد الكوبونات</th>
-                    <th>تاريخ الطلب</th>
-                    <th> المشاهدة</th>
-                    <th>سعر الكوبونات</th>
-                    <th>فعل</th>
-                </tr>
-                </thead>
-                <tbody>
-                @foreach($orders as $order)
+            <div class="table-responsive">
+                <table class="table table-bordered mt-5">
+                    <thead>
                     <tr>
-                        <td>{{ $order->id }}</td>
-                        <td>{{ $order->order_id }}</td>
-                        <td>{{ $order->coupons_count }}</td>
-                        <td>{{ $order->created_at }}</td>
-                        <td>{{ $order->seen_at }}</td>
-                        <td>{{ $order->coupons_price() }}</td>
-                        <td>
-                            <button wire:click="edit({{ $order->id }})" class="btn btn-primary btn-sm">تعديل</button>
-                            <button
-                                wire:confirm="هل انت متأكد من المسح"
-                                wire:click="delete({{ $order->id }})" class="btn btn-danger btn-sm">مسح</button>
-                            <button class="btn btn-success btn-sm" wire:click="resetSeen({{ $order->id }})">اعادة تعيين المشاهدة</button>
-                        </td>
+                        <th>تسلسل.</th>
+                        <th>رقم الطلب</th>
+                        <th>عدد الكوبونات</th>
+                        <th>تاريخ الطلب</th>
+                        <th> المشاهدة</th>
+                        <th>سعر الكوبونات</th>
+                        <th>فعل</th>
                     </tr>
-                @endforeach
-                </tbody>
-            </table>
+                    </thead>
+                    <tbody>
+                    @foreach($orders as $order)
+                        <tr>
+                            <td>{{ $order->id }}</td>
+                            <td>{{ $order->order_id }}</td>
+                            <td>{{ $order->coupons_count }}</td>
+                            <td>{{ $order->created_at }}</td>
+                            <td>{{ $order->seen_at }}</td>
+                            <td>{{ $order->coupons_price() }}</td>
+                            <td>
+                                <button wire:click="edit({{ $order->id }})" class="btn btn-primary btn-sm">تعديل</button>
+                                <button
+                                    wire:confirm="هل انت متأكد من المسح"
+                                    wire:click="delete({{ $order->id }})" class="btn btn-danger btn-sm">مسح</button>
+                                <button class="btn btn-success btn-sm" wire:click="resetSeen({{ $order->id }})">اعادة تعيين المشاهدة</button>
+                                @include("components.order_note_modal")
+                            </td>
+                        </tr>
+                    @endforeach
+                    </tbody>
+                </table>
+            </div>
 
             {{ $orders->links() }}
         </div>

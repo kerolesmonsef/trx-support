@@ -17,6 +17,7 @@ class AccountService
         $group->accounts()->create([
             'order_id' => $order->id,
             'profile' => $accountArray['profile'],
+            'subscription_expire_at' => $accountArray['subscription_expire_at'],
         ]);
     }
 }

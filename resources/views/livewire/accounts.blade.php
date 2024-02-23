@@ -58,8 +58,8 @@
 
                             <div class="accordion-item mb-4 card border border-dark">
                                 <div class="accordion-header" id="headingOne">
-                                    <div class="overflow-hidden pt-1" >
-                                        <h1 data-bs-toggle="collapse" data-bs-target="#{{ $accordion_id }}" style="cursor: pointer;display: inline">{{ $group->id }} - {{ $group->name }}</h1>
+                                    <div class="overflow-hidden pt-1 " style="background-color: gainsboro">
+                                        <h1 class="h1" data-bs-toggle="collapse" data-bs-target="#{{ $accordion_id }}" style="cursor: pointer;display: inline">{{ $group->id }} - {{ $group->name }}</h1>
                                         <button wire:confirm="هل انت متأكد من الحذف" wire:click="removeGroup({{ $group->id }})" class="btn btn-danger float-end m-1">
                                             <i class="fa fa-trash"></i> حذف المجموعة
                                         </button>
@@ -73,17 +73,28 @@
                                         <div class="card">
                                             <div class="card-header bg-primary text-white">
                                                 بيانات المجموعة
+
                                             </div>
                                             <div class="card-body">
                                                 <div class="row ">
-                                                    <div class="col-md-6 offset-md-6">
+                                                    <div class="col-md-6">
+                                                        <button class="btn btn-sm btn-info" wire:click="$dispatch('openModal', { component: 'show-group-activities' , arguments :{group_id:'{{ $group->id }}'} },)">
+                                                            عرض التحديثات
+                                                        </button>
+                                                        <br>
+                                                    </div>
+                                                    <div class="col-md-6 ">
                                                         <div class="row mb-3">
-                                                            <div class="col-md-6 text-end">
+                                                            <div class="col-md-4 text-end">
+                                                                <span class="badge bg-secondary">{{ $group->lastUpdatedUser?->name }}</span> : اخر من قام بالتعديل
+                                                            </div>
+                                                            <div class="col-md-4 text-end">
                                                                 <span class="badge bg-secondary">{{ $group->accounts_count }}</span> : عدد البروفايلات
                                                             </div>
-                                                            <div class="col-md-6 text-end">
+                                                            <div class="col-md-4 text-end">
                                                                 <span class="badge bg-secondary">{{ $group->username }}</span> : البريد الالكتروني
                                                             </div>
+
                                                         </div>
                                                         <div class="row mb-3">
                                                             <div class="col-md-6 text-end">
@@ -94,16 +105,18 @@
                                                             </div>
                                                         </div>
                                                     </div>
+
                                                 </div>
                                             </div>
-                                            <div class="card-footer">
-                                                <table class="table">
+                                            <div class="card-footer table-responsive">
+                                                <table class="table ">
                                                     <tr>
                                                         <th>رقم الطلب</th>
                                                         <th>تاريخ الطلب</th>
                                                         <th>رقم البروفايل</th>
                                                         <th>ملاحظات</th>
                                                         <th>المشاهدة</th>
+                                                        <th> انتهاء الصلاحية</th>
                                                         <th>تاريخ اخر تحديث</th>
                                                     </tr>
                                                     @foreach ($group->accounts as $account)
@@ -113,6 +126,7 @@
                                                             <td>{{ $account->profile }}</td>
                                                             <td>{{ $account->order->note }}</td>
                                                             <td>{{ $account->order->seen_at }}</td>
+                                                            <td>{{ $account->subscription_expire_at }}</td>
                                                             <td>{{ $account->order->updated_at }}</td>
                                                         </tr>
                                                     @endforeach

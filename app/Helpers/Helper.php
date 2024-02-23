@@ -2,6 +2,7 @@
 
 namespace App\Helpers;
 
+use Illuminate\Database\Events\QueryExecuted;
 use Illuminate\Validation\Rule;
 
 class Helper
@@ -57,5 +58,15 @@ class Helper
             'order_id' => 'required|unique:orders',
             'coupons.*.code' => ['required', 'unique:coupons,code'],
         ];
+    }
+
+    public static function  getQueries($builder)
+    {
+        if ($builder instanceof QueryExecuted){
+            $addSlashes = str_replace('?', "'?'", $builder->sql);
+            return vsprintf(str_replace('?', '%s', $addSlashes), $builder->bindings);
+        }
+        $addSlashes = str_replace('?', "'?'", $builder->toSql());
+        return vsprintf(str_replace('?', '%s', $addSlashes), $builder->getBindings());
     }
 }

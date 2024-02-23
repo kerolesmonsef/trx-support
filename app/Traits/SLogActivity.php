@@ -11,10 +11,6 @@ trait SLogActivity
 
     public function getActivitylogOptions(): LogOptions
     {
-        return LogOptions::defaults()
-            ->logOnlyDirty()
-            ->logAll()->logExcept([
-                'created_at', 'updated_at',
-            ]);
+        return LogOptions::defaults();
     }
 }

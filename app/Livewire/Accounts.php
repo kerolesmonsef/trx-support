@@ -83,6 +83,7 @@ class Accounts extends Component
             'profile' => '',
             'warning_rank' => '',
             'warning_message' => '',
+            'subscription_expire_at' => null,
         ];
     }
 
@@ -90,8 +91,10 @@ class Accounts extends Component
     {
         $account = $this->accounts_array[$index];
 
-        if ($account['id']) {
-            Account::find($account['id'])->order()->delete();
+        if ($account['id'] ?? null) {
+            $account = Account::find($account['id']);
+            $account?->delete();
+            Order::find($account?->order_id)?->delete();
         }
 
         array_splice($this->accounts_array, $index, 1);
@@ -118,7 +121,9 @@ class Accounts extends Component
         $this->dispatch('reloadClassicEditor', $this->description);
 
 
-        $this->accounts_array = $group->accounts->map(function (Account $account) {
+        $this->accounts_array = $group->accounts->load(["order" => function ($q) {
+            $q->with("notes");
+        }])->map(function (Account $account) {
             return [
                 'id' => $account->id,
                 'order_id' => $account->order->order_id,
@@ -127,6 +132,8 @@ class Accounts extends Component
                 'profile' => $account->profile,
                 'warning_rank' => $account->order->warning_rank,
                 'warning_message' => $account->order->warning_message,
+                'account_object' => $account,
+                'subscription_expire_at' => $account->subscription_expire_at,
             ];
         })->toArray();
 
@@ -156,6 +163,7 @@ class Accounts extends Component
             'description' => $this->description,
             'username' => $this->username,
             'password' => $this->password,
+            'last_updated_user_id' => auth()->id(),
         ]);
 
         foreach ($this->accounts_array as $account_array) {
@@ -167,6 +175,7 @@ class Accounts extends Component
 
             $account->update([
                 'profile' => $account_array['profile'],
+                'subscription_expire_at' => $account_array['subscription_expire_at'],
             ]);
             $account->order()->update([
                 'order_id' => $account_array['order_id'],

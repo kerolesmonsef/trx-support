@@ -1,0 +1,14 @@
+.w-color {
+    color: #fea84b
+}
+
+.complain-input {
+    background-color: #131416;
+    color: #fea84b;
+    border: 1px solid #fea84b;
+}
+
+.complain-input:focus {
+    background-color: #131416;
+    color: #fea84b;
+}

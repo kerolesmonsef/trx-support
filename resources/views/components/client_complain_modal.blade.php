@@ -49,12 +49,12 @@
                             الكود
                         </label>
                         <div class="form-group">
-                                    <span>
+                                    <span id="captcha-image">
                                         {!!  captcha_img()  !!}
                                     </span>
-                            <button id="reload-captcha" type="button"
+                            <button type="button"
                                     style="background: #fea84b;padding: 3px 15px;;font-weight: bold;font-size: 15px;"
-                                    class="btn captcha-image">اعادة تحميل
+                                    class="btn  reload-captcha">اعادة تحميل
                             </button>
                         </div>
                     </div>

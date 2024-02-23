@@ -23,6 +23,7 @@ trait ComplainComponent
     {
         $this->orderComplain->update([
             'status' => $status,
+            'last_updated_user_id' => auth()->id()
         ]);
         session()->flash('message', "تم تحديث الحالة بنجاح");
     }

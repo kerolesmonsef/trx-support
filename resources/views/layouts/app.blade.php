@@ -14,9 +14,16 @@
     <link href="https://fonts.bunny.net/css?family=Nunito" rel="stylesheet">
     <link href="{{ asset("css/bootstrap.min.css") }}" rel="stylesheet">
     <link rel="icon" href="{{ asset("images/dark-logo.png") }}" type="image/x-icon">
+    <script src="{{ asset('js/jquery-3.7.1.min.js') }}"></script>
 
     <!-- Scripts -->
     @stack("styles")
+
+    @auth()
+        <script src="{{ asset("js/main.js") }}"></script>
+        <link href="{{ asset("css/tailwind.min.css") }}" rel="stylesheet">
+
+    @endauth
 </head>
 <body>
 <div id="app">
@@ -107,9 +114,9 @@
     </main>
 </div>
 </body>
-<script src="{{ asset('js/jquery-3.7.1.min.js') }}"></script>
 <script src="{{ asset('js/bootstrap.min.js') }}"></script>
 @auth()
+    @livewire('wire-elements-modal')
     @livewireScripts
 @endauth
 @stack("scripts")

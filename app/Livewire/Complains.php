@@ -18,6 +18,7 @@ class Complains extends Component
     protected $paginationTheme = 'bootstrap';
     public $search = '';
     public $status = '';
+    public $type = '';
 
 
     public function render()
@@ -31,12 +32,21 @@ class Complains extends Component
     private function getComplains(): LengthAwarePaginator
     {
         return OrderComplain::query()
-            ->with("order")
-            ->latest()
+            ->with(["order", 'type', 'lastUpdatedUser'])
             ->when($this->status, function (Builder $builder) {
                 $builder->where('order_complains.status', $this->status);
             })
-            ->where("description", "LIKE", "%{$this->search}%")
+            ->when($this->type, function (Builder $builder) {
+                $builder->where('order_complains.complain_type_id', $this->type);
+            })
+            ->when($this->search, function (Builder $builder) {
+                $builder->where("description", "LIKE", "%{$this->search}%")
+                    ->orWhere("order_id", "LIKE", "%{$this->search}%")
+                    ->orWhereHas("order", function (Builder $builder) {
+                        $builder->where("orders.order_id", "LIKE", "%{$this->search}%");
+                    });
+            })
+            ->latest()
             ->paginate();
     }
 

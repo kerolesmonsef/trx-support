@@ -2,8 +2,11 @@
 
 namespace App\Providers;
 
+use App\Helpers\Helper;
 use Carbon\Carbon;
+use Illuminate\Database\Events\QueryExecuted;
 use Illuminate\Pagination\Paginator;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -23,5 +26,10 @@ class AppServiceProvider extends ServiceProvider
     public function boot(): void
     {
         Carbon::setLocale("ar");
+//        DB::listen(function (QueryExecuted $query) {
+//            info(Helper::getQueries($query));
+//        });
     }
+
+
 }

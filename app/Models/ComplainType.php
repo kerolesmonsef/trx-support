@@ -15,4 +15,12 @@ class ComplainType extends Model
     use HasFactory, SLogActivity, SoftDeletes;
 
     protected $guarded = [];
+
+    public function getTypeAr(): string
+    {
+        if ($this->type == "account"){
+            return "بروفايل";
+        }
+        return "كوبون";
+    }
 }

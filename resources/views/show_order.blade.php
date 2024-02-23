@@ -1,4 +1,4 @@
-@php use App\Models\Settings; @endphp
+@php use App\Models\Settings;use Carbon\Carbon; @endphp
 <?php
 /** @var $order \App\Models\Order */
 $complainTypes = \App\Models\ComplainType::query();
@@ -10,24 +10,7 @@ if ($order->hasAccount()) {
 $complainTypes = $complainTypes->get();
 ?>
 @extends("order_master")
-@push("styles")
-    <style>
-        .w-color {
-            color: #fea84b
-        }
 
-        .complain-input {
-            background-color: #131416;
-            color: #fea84b;
-            border: 1px solid #fea84b;
-        }
-
-        .complain-input:focus {
-            background-color: #131416;
-            color: #fea84b;
-        }
-    </style>
-@endpush
 
 @section("title")
     بيانات الطلب الخاص بك
@@ -63,7 +46,7 @@ $complainTypes = $complainTypes->get();
                         @if($order->hasAccount())
                             <li class="list-group-item" style="color: black">
                                 ايميل الدخول : <span
-                                        class="code">{{ $order->account->group->username }}</span>
+                                    class="code">{{ $order->account->group->username }}</span>
                                 <span class="float-start badge bg-warning copy mt-2" style="cursor: pointer">نسخ </span>
                             </li>
                             <li class="list-group-item" style="color: black">
@@ -80,7 +63,7 @@ $complainTypes = $complainTypes->get();
                                         {{ $loop->index + 1  }} - <span class="code">{{ $coupon->code }}</span>
                                     </span>
                                     <span
-                                            class="float-start badge bg-secondary"> سعر الكوبون{{ $coupon->price }} $</span>
+                                        class="float-start badge bg-secondary"> سعر الكوبون{{ $coupon->price }} $</span>
                                     <br>
                                     <span class="float-start badge bg-warning copy mt-2" style="cursor: pointer">نسخ الكود</span>
                                 </li>
@@ -92,7 +75,17 @@ $complainTypes = $complainTypes->get();
                     </ul>
                 </td>
             </tr>
-
+            <tr>
+                <th class="text-right w-color">اخر تحديث</th>
+                <td>
+                    <span class="badge bg-secondary">
+                        {{ Carbon::parse($order->updated_at)->diffForHumans() }}
+                    </span>
+                    <span class="badge bg-secondary">
+                        {{ $order->updated_at }} توقيت مكة
+                    </span>
+                </td>
+            </tr>
             @if($order->warning_rank > 0)
                 <tr>
                     <th class="text-right w-color">التحذير</th>
@@ -152,7 +145,9 @@ $complainTypes = $complainTypes->get();
     font-size: 18px;" href="/" class="text-decoration-none">ادخال رقم طلب جديد</a>
 
         @if($order->hasPendingComplain())
-            <p class="w-color">لديك تذكرة قيد الانتظار برجاء الانتظار و سوف يتم التواصل معك خلال 48 ساعة</p>
+            <p class="w-color">- يجب انتظار انتهاء معالجة التذكرة الحالية قبل فتح تذكرة جديدة في النظام</p>
+            <p class="w-color"> # - في حال مر على تذكرتك أكثر من 48 ساعه ولم يتم حل ,
+                يمكنك التواصل معنا عبر قنوات الدعم لمتاجر تركسساعة</p>
         @else
             @include("components.client_complain_modal")
         @endif
@@ -168,7 +163,6 @@ $complainTypes = $complainTypes->get();
 
 @push("scripts")
     <script src="{{ asset('js/bootstrap.min.js') }}"></script>
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script>
         $(document).ready(function () {
             const max_chars = 100;
@@ -176,8 +170,8 @@ $complainTypes = $complainTypes->get();
 
             $(".description-char-count").text(max_chars - descriptionObject.val().length);
             descriptionObject.on("input", function () {
-                const current_allowed_length =max_chars -  $(this).val().length;
-                $(".description-char-count").text( current_allowed_length);
+                const current_allowed_length = max_chars - $(this).val().length;
+                $(".description-char-count").text(current_allowed_length);
                 if (current_allowed_length <= 1) {
                     $(this).val($(this).val().slice(0, max_chars));
                 }

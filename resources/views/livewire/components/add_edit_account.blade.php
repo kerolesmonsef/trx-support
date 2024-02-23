@@ -49,35 +49,58 @@
                                     حساب {{ $key + 1 }}
                                 </div>
                                 <div class="card-body">
-                                    <div class="form-group">
-                                        <label>
-                                            رقم الطلب
-                                            <input type="text" class="form-control"
-                                                   wire:model.live="accounts_array.{{ $key }}.order_id">
-                                        </label>
-                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-8">
+                                            <div class="form-group">
+                                                <label>
+                                                    رقم الطلب
+                                                    <input type="text" class="form-control"
+                                                           wire:model.live="accounts_array.{{ $key }}.order_id">
+                                                </label>
+                                            </div>
+                                            <div class="form-group">
+                                                <label>
+                                                    رقم البروفايل
+                                                    <input type="text" class="form-control"
+                                                           wire:model.live="accounts_array.{{ $key }}.profile">
+                                                </label>
+                                            </div>
+                                            <div class="form-group">
+                                                <label>
+                                                    أضافة حماية رقم هاتف
+                                                    <input type="text" class="form-control"
+                                                           wire:model.live="accounts_array.{{ $key }}.secure_phone">
+                                                </label>
+                                            </div>
+                                            <div>
+                                                <label>
+                                                    تاريخ انتهاء الاشتراك
+                                                    <input type="date" class="form-control"
+                                                           wire:model.live="accounts_array.{{ $key }}.subscription_expire_at">
+                                                </label>
+                                            </div>
+                                            <div class="form-group">
+                                                <label>
+                                                    ملاحظة
+                                                    <input type="text" class="form-control"
+                                                           wire:model.live="accounts_array.{{ $key }}.note">
+                                                </label>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            @if(isset($account['account_object']))
+                                                @component("components.order_note_modal")
+                                                    @slot("order",$account['account_object']->order)
+                                                @endcomponent
+                                                <div class="form-group">
+                                                    اخر كاتب ملاحظة
+                                                    <span class="badge bg-secondary">
+                                                        {{ $account['account_object']->order->lastNoteUserName() }}
+                                                    </span>
+                                                </div>
+                                            @endif
 
-                                    <div class="form-group">
-                                        <label>
-                                            رقم البروفايل
-                                            <input type="text" class="form-control"
-                                                   wire:model.live="accounts_array.{{ $key }}.profile">
-                                        </label>
-                                    </div>
-
-                                    <div class="form-group">
-                                        <label>
-                                            أضافة حماية رقم هاتف
-                                            <input type="text" class="form-control"
-                                                   wire:model.live="accounts_array.{{ $key }}.secure_phone">
-                                        </label>
-                                    </div>
-                                    <div class="form-group">
-                                        <label>
-                                            ملاحظة
-                                            <input type="text" class="form-control"
-                                                   wire:model.live="accounts_array.{{ $key }}.note">
-                                        </label>
+                                        </div>
                                     </div>
                                     <hr>
                                     <div class="form-group">

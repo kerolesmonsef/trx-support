@@ -6,11 +6,13 @@
         <table class="table">
             <tr>
                 <td>اسم المشكلة</td>
+                <td>نوع المشكلة</td>
                 <td>العملية</td>
             </tr>
             @foreach($complain_types as $type)
                 <tr>
                     <td>{{ $type->name }}</td>
+                    <td>{{ $type->getTypeAr() }}</td>
                     <td>
                         <button wire:click="editComplainType({{ $type->id }})"
                                 class="btn btn-primary btn-sm">تعديل

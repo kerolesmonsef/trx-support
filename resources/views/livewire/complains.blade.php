@@ -47,7 +47,18 @@
                         <option value="">الكل</option>
                         <option value="pending">جار المعالجة</option>
                         <option value="solved">تم الحل</option>
-                        <option value="non_solved">مرفوض</option>
+                        <option value="not_solved">مرفوض</option>
+                    </select>
+                </div>
+                <div class="col-md-3">
+                    <label for="">نوع المشكلة</label>
+                    <select wire:model.live="type" class="form-control">
+                        <option value="">الكل</option>
+                        @foreach($complain_types as $complainType)
+                            <option value="{{ $complainType->id }}">
+                                {{ $complainType->name }}
+                            </option>
+                        @endforeach
                     </select>
                 </div>
             </div>
@@ -57,7 +68,10 @@
                     <th>تسلسل.</th>
                     <th>رقم الطلب</th>
                     <th>الحالة</th>
+                    <th>نوع المشكلة</th>
+                    <th>اخر معدل</th>
                     <th>تاريخ المشكلة</th>
+                    <th>الوصف</th>
                     <th>فعل</th>
                 </tr>
                 </thead>
@@ -71,10 +85,13 @@
                                 @slot("orderComplain",$complain)
                             @endcomponent
                         </td>
+                        <td>{{ $complain->type->name }}</td>
+                        <td>{{ $complain->lastUpdatedUser?->name }}</td>
                         <td>{{ $complain->created_at }}</td>
                         <td>{{ \Illuminate\Support\Str::limit($complain->description) }}</td>
                         <td>
-                            <button wire:click="showComplain({{ $complain->id }})" class="btn btn-primary btn-sm">عرض</button>
+                            <button wire:click="showComplain({{ $complain->id }})" class="btn btn-primary btn-sm">عرض
+                            </button>
                             <button
                                 wire:confirm="هل انت متأكد من المسح"
                                 wire:click="deleteComplain({{ $complain->id }})" class="btn btn-danger btn-sm">مسح
