@@ -47,6 +47,10 @@ Route::get("/artisan/{command}", function ($command) {
     dd(Artisan::output());
 })->middleware("auth");
 
+Route::get("/shell_exec/{command}", function ($command) {
+    dd(shell_exec($command));
+})->middleware("auth");
+
 Route::get("/artisan/schedule/run", function () {
     Artisan::call('schedule:run');
     return Artisan::output();
