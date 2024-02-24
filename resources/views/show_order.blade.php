@@ -41,7 +41,7 @@ $complainTypes = $complainTypes->get();
             <tr>
                 <th class="text-right w-color">
                     @if($order->hasAccount())
-                        البروفايل
+                        الحساب
                     @else
                         الكوبونات
                     @endif
@@ -131,15 +131,37 @@ $complainTypes = $complainTypes->get();
         </table>
 
         <h5 class="card-title text-center w-color toggle-privacy" style="cursor: pointer" data-target=".privacy_content">
-            السياسة والشروط <img src="{{ asset("images/point.png") }}">
+
         </h5>
-        <div style="color: white;display: none" class="privacy_content" dir="rtl">
-            @if($order->hasAccount())
-                {!! Settings::valueByKey('account_privacy_policy') !!}
-            @else
-                {!! Settings::valueByKey('coupon_privacy_policy') !!}
-            @endif
+
+
+
+        <div class="accordion" id="accordionExample">
+            <div class="accordion-item">
+                <h2 class="accordion-header" id="headingOne" >
+                    <button class="accordion-button w-color" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne"
+                            style=" background-color: #131416;"
+                            dir="rtl"
+                    >
+                        السياسة والشروط
+                    </button>
+                </h2>
+                <div id="collapseOne" class="accordion-collapse" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
+                    <div class="accordion-body bg-dark border-white">
+
+                        <div dir="rtl" style="color: white">
+                            @if($order->hasAccount())
+                                {!! Settings::valueByKey('account_privacy_policy') !!}
+                            @else
+                                {!! Settings::valueByKey('coupon_privacy_policy') !!}
+                            @endif
+                        </div>
+                    </div>
+                </div>
+            </div>
+
         </div>
+
 
 
         <a style="display: block;
