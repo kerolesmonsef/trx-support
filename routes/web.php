@@ -64,4 +64,5 @@ Route::middleware('auth')->group(function () {
     Route::post("settings", [SettingsController::class, 'update'])->name("settings.update");
     Route::get("complains", [AdminComplainController::class, 'index'])->name("complains.index");
     Route::resource("users", UserController::class);
+    Route::get('logs', [\Rap2hpoutre\LaravelLogViewer\LogViewerController::class, 'index']);
 });

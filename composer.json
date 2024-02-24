@@ -13,6 +13,7 @@
         "laravel/ui": "^4.4",
         "livewire/livewire": "^3.4",
         "mews/captcha": "^3.3",
+        "rap2hpoutre/laravel-log-viewer": "^2.3",
         "spatie/laravel-activitylog": "^4.7",
         "spatie/laravel-permission": "^6.3",
         "wire-elements/modal": "^2.0"
