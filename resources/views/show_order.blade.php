@@ -146,7 +146,7 @@ $complainTypes = $complainTypes->get();
                         السياسة والشروط
                     </button>
                 </h2>
-                <div id="collapseOne" class="accordion-collapse" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
+                <div id="collapseOne" class="accordion-collapse collapse" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
                     <div class="accordion-body bg-dark border-white">
 
                         <div dir="rtl" style="color: white">
