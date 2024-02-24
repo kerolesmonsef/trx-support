@@ -39,7 +39,7 @@
 
                     <div class="mb-3">
                         <label for="whatsapp" class="form-label">الواتس اب</label>
-                        <input type="text" class="form-control" id="whatsapp" name="whatsapp">
+                        <input type="text" class="form-control" id="whatsapp" name="whatsapp" value="{{ Settings::valueByKey("whatsapp") }}">
                     </div>
 
                     <br>

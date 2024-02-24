@@ -24,7 +24,7 @@
         <a href=" https://wa.me/{{ Settings::valueByKey('whatsapp') }}" class="icon whatsapp">
             <img style="width: 100%;" src="{{ asset("images/whatsapp.png") }}" alt="واتس اب">
         </a>
-        <a href="https://t.me/{{ Settings::valueByKey('telegram') }}" class="icon telegram">
+        <a href="{{ Settings::valueByKey('telegram') }}" class="icon telegram">
             <img style="width: 100%;" src="{{ asset("images/telegram.png") }}" alt="تلجرام"></a>
     </div>
 </div>
