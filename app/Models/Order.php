@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Traits\SLogActivity;
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -32,6 +33,24 @@ class Order extends Model
     public function hasPendingComplain(): bool
     {
         return $this->complains()->where("order_complains.status", "pending")->exists();
+    }
+
+    public function isBefore48HourFromLastPendingComplain(): bool
+    {
+        $lastComplain = $this->complains()->where("order_complains.status", "pending")->latest('id')->first();
+        if (!$lastComplain) {
+            return false;
+        }
+        return Carbon::parse($lastComplain->created_at)->diffInHours(now()) < 48;
+    }
+
+    public function lastPendingComplainDateForSupport(): ?string
+    {
+        $lastComplain = $this->complains()->where("order_complains.status", "pending")->latest('id')->first();
+        if (!$lastComplain) {
+            return now()->format("Y-m-d");
+        }
+        return Carbon::parse($lastComplain->created_at)->addDays(2)->format("Y-m-d H:i");
     }
 
     public function coupons(): HasMany

@@ -15,12 +15,17 @@ $complainTypes = $complainTypes->get();
 @section("title")
     بيانات الطلب الخاص بك
 @endsection
+@push("styles")
+    <link href="{{ asset("css/smart_wizard_all.min.css") }}" rel="stylesheet" type="text/css"/>
+    <link rel="stylesheet" href="{{ asset("css/counter_down.css") }}">
+
+@endpush
 @section("content")
     <title>Trx Support | order id {{ $order->order_id }}</title>
     <div class="container mt-4">
-        <table class="table table-bordered">
+        <table class="table table-bordered" dir="rtl">
             <tr>
-                <th class="text-right w-color">رقم الطلب</th>
+                <th class=" w-color">رقم الطلب</th>
                 <td style="color: white">{{$order->order_id}}</td>
             </tr>
             @if($order->price)
@@ -36,7 +41,7 @@ $complainTypes = $complainTypes->get();
             <tr>
                 <th class="text-right w-color">
                     @if($order->hasAccount())
-                        الحساب
+                        البروفايل
                     @else
                         الكوبونات
                     @endif
@@ -92,7 +97,7 @@ $complainTypes = $complainTypes->get();
                     <td>
                         @if($order->warning_rank == 1)
                             <span class="text-white">لديك تحزير من الدرجة</span>
-                            <span class="badge " style="background-color: yellow">1</span>
+                            <span class="badge " style="background-color: yellow;color: black">1</span>
                         @elseif($order->warning_rank == 2)
                             <span class="text-white">لديك تحزير من الدرجة</span>
                             <span class="badge bg-warning">2</span>
@@ -125,8 +130,10 @@ $complainTypes = $complainTypes->get();
             </tr>
         </table>
 
-        <h5 class="card-title text-center w-color">السياسة والشروط</h5>
-        <div style="color: white">
+        <h5 class="card-title text-center w-color toggle-privacy" style="cursor: pointer" data-target=".privacy_content">
+            السياسة والشروط <img src="{{ asset("images/point.png") }}">
+        </h5>
+        <div style="color: white;display: none" class="privacy_content" dir="rtl">
             @if($order->hasAccount())
                 {!! Settings::valueByKey('account_privacy_policy') !!}
             @else
@@ -145,74 +152,73 @@ $complainTypes = $complainTypes->get();
     font-size: 18px;" href="/" class="text-decoration-none">ادخال رقم طلب جديد</a>
 
         @if($order->hasPendingComplain())
-            <p class="w-color">- يجب انتظار انتهاء معالجة التذكرة الحالية قبل فتح تذكرة جديدة في النظام</p>
-            <p class="w-color"> # - في حال مر على تذكرتك أكثر من 48 ساعه ولم يتم حل ,
-                يمكنك التواصل معنا عبر قنوات الدعم لمتاجر تركسساعة</p>
+            <p class="w-color text-end">- يجب انتظار انتهاء معالجة التذكرة الحالية قبل فتح تذكرة جديدة في النظام</p>
+            <p class="w-color text-end"> # - في حال مر على تذكرتك أكثر من 48 ساعه ولم يتم حل ,
+                يمكنك التواصل معنا عبر قنوات الدعم لمتاجر تركس</p>
         @else
             @include("components.client_complain_modal")
         @endif
         @if($order->complains()->exists())
             @include("components.client_old_complains")
         @endif
-
     </div>
-
-    {{--    jquery cdn--}}
-
 @endsection
 
+@if($order->hasPendingComplain() && $order->isBefore48HourFromLastPendingComplain())
+    @section("under_image")
+        @include("components.contact_counter_down")
+    @endsection
+@elseif($order->hasPendingComplain())
+    @section("under_image")
+        @include("components.contact_support")
+    @endsection
+@endif
 @push("scripts")
-    <script src="{{ asset('js/bootstrap.min.js') }}"></script>
+    <script src="{{ asset("js/show_order.js") }}"></script>
+    <script src="{{ asset("js/jquery.smartWizard.min.js") }}" type="text/javascript"></script>
+
     <script>
-        $(document).ready(function () {
-            const max_chars = 100;
-            const descriptionObject = $(".complain-description");
-
-            $(".description-char-count").text(max_chars - descriptionObject.val().length);
-            descriptionObject.on("input", function () {
-                const current_allowed_length = max_chars - $(this).val().length;
-                $(".description-char-count").text(current_allowed_length);
-                if (current_allowed_length <= 1) {
-                    $(this).val($(this).val().slice(0, max_chars));
-                }
-            });
-        });
-        $(".copy").click(function () {
-            let code = $(this).parent().find(".code").text();
-            navigator.clipboard.writeText(code);
-            Swal.fire({
-                toast: true,
-                icon: 'success',
-                title: 'تم النسخ بنجاح',
-                animation: false,
-                position: 'bottom-left',
-                showConfirmButton: false,
-                timer: 3000,
-                timerProgressBar: true
-            })
+        $('.smartwizard').smartWizard({
+            selected: 0,
+            theme: 'dots',
+            keyboard: {
+                keyNavigation: true, // Enable/Disable keyboard navigation(left and right keys are used if enabled)
+                keyLeft: [37], // Left key code
+                keyRight: [39] // Right key code
+            },
+            lang: { // Language variables for button
+                next: 'التالي',
+                previous: 'السابق'
+            },
+            onLeaveStep: function (evt, stepNumber, message) {
+                console.log("dsds")
+            },
         });
 
-        $('a').click(function (event) {
-            event.preventDefault(); // Prevent the default behavior of the <a> tag
+        $(".smartwizard").on("leaveStep", function (e, anchorObject, currentStepIndex, nextStepIndex, stepDirection) {
+            // forward - backward
+            let complainDescription = $("#complainDescription").val();
+            let complainCaptcha = $("#complain-captcha").val();
+            if (currentStepIndex === 1 && stepDirection === "forward" && complainDescription.length <= 0) {
+                $(".complain-error").show();
+                return false;
+            }
+            if (currentStepIndex === 1 && stepDirection === "forward" && complainCaptcha.length <= 0) {
+                $(".complain-captcha-error").show();
+                return false;
+            }
 
-            // Get the URL from the <a> tag's href attribute
-            const url = $(this).attr('href');
-
-            Swal.fire({
-                title: 'هل انت متاكد?',
-                text: 'سيتم نقلك الى صفحة ثاني هل ترغب في متابع',
-                icon: 'warning',
-                showCancelButton: true,
-                confirmButtonText: 'نعم!',
-                cancelButtonText: 'لا الغاء!',
-                reverseButtons: true
-            }).then((result) => {
-                // If user confirms, proceed with the action
-                if (result.isConfirmed) {
-                    window.location.href = url;
-                }
-            });
-
+            $(".invalid-feedback").hide();
+            return true;
         });
+
+        $(".toggle-privacy").click(function() {
+            const target = $(this).data("target");
+            $(target).toggle();
+        });
+
+        const countdownDate = new Date('{{ $order->lastPendingComplainDateForSupport() ?? now()->format("Y-m-d") }}');
     </script>
+
+    <script src="{{ asset("js/counter_down.js") }}"></script>
 @endpush

@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Str;
 
 /**
  * @mixin IdeHelperOrderComplain
@@ -17,6 +18,14 @@ class OrderComplain extends Model
 
     protected $guarded = [];
 
+    protected static function booted()
+    {
+        parent::booted();
+        static::creating(function (OrderComplain $model) {
+            $model->code = rand(99, 999) . "-" . Str::random(4);
+        });
+    }
+
     public function order()
     {
         return $this->belongsTo(Order::class);
@@ -25,6 +34,11 @@ class OrderComplain extends Model
     public function type()
     {
         return $this->belongsTo(ComplainType::class, 'complain_type_id')->withTrashed();
+    }
+
+    public function assignee(): BelongsTo
+    {
+        return $this->belongsTo(User::class, 'assigned_user_id');
     }
 
     public function lastUpdatedUser(): BelongsTo

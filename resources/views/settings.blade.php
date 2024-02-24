@@ -16,11 +16,36 @@
                         <textarea class="form-control editor"
                                   name="coupon_privacy_policy">{{ Settings::valueByKey("coupon_privacy_policy") }}</textarea>
                     </div>
-
+                    <br>
+                    <hr>
                     <div class="form-group">
                         <label for="account_privacy_policy">سياسة خصوصية الحسابات</label>
-                        <textarea class="form-control editor" name="account_privacy_policy">{{ Settings::valueByKey("account_privacy_policy") }}</textarea>
+                        <textarea class="form-control editor"
+                                  name="account_privacy_policy">{{ Settings::valueByKey("account_privacy_policy") }}</textarea>
                     </div>
+                    <br>
+                    <hr>
+                    <div class="form-group">
+                        <label for="terms_and_conditions">الشروط والأحكام في المشاكل</label>
+                        <textarea class="form-control editor"
+                                  name="complain_terms_and_conditions">{{ Settings::valueByKey("complain_terms_and_conditions") }}</textarea>
+                    </div>
+                    <br>
+                    <hr>
+                    <div class="form-group">
+                        <label for="telegram">تلجرام</label>
+                        <input class="form-control" name="telegram" id="telegram" value="{{ Settings::valueByKey("telegram") }}">
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="whatsapp" class="form-label">الواتس اب</label>
+                        <input type="text" class="form-control" id="whatsapp" name="whatsapp">
+                    </div>
+
+                    <br>
+                    <hr>
+
+
 
                     <div class="form-group mt-4">
                         <button type="submit" class="btn btn-primary">حفظ</button>

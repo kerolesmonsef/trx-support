@@ -1,5 +1,6 @@
+@php use App\Models\OrderComplain; @endphp
 <?php
-/** @var \App\Models\OrderComplain[] $complains */
+/** @var OrderComplain[] $complains */
 ?>
 <div>
     <div class="card mt-3">
@@ -7,7 +8,47 @@
             المشاكل
         </div>
         <div class="card-body">
-            <div class="row">
+
+
+            <div class="row mt-5 align-items-center">
+                <div class="col-md-4">
+                    <div class="card bg-warning rounded shadow-sm text-white">
+                        <div class="card-body py-5 text-center">
+                            <i class="fa fa-users fa-3x mb-3"></i> <h5 class="card-title font-weight-bold">مشاكل قيد
+                                المراجعة</h5>
+                            <h1 class="card-text display-4" data-toggle="counter">
+                                {{ OrderComplain::query()->where("status","pending")->count() }}
+                            </h1>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card bg-success rounded shadow-sm text-white">
+                        <div class="card-body py-5 text-center">
+                            <i class="fa fa-shopping-cart fa-3x mb-3"></i> <h5 class="card-title font-weight-bold">
+                                مشاكل تم الحل</h5>
+                            <h1 class="card-text display-4" data-toggle="counter">
+                                {{ OrderComplain::query()->where("status", "solved")->count() }}
+                            </h1>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card bg-danger rounded shadow-sm text-dark">
+                        <div class="card-body py-5 text-center">
+                            <i class="fa fa-money-bill fa-3x mb-3"></i> <h5 class="card-title font-weight-bold">
+                                مشاكل لم تتم الحل
+                            </h5>
+                            <h1 class="card-text display-4" data-toggle="counter">
+                                {{ OrderComplain::query()->where("status", "not_solved")->count() }}
+                            </h1>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="row mt-5">
                 <div>
                     @if (session()->has('message'))
                         <div class="alert alert-success">
@@ -72,13 +113,14 @@
                     <th>اخر معدل</th>
                     <th>تاريخ المشكلة</th>
                     <th>الوصف</th>
+                    <th>تعيين</th>
                     <th>فعل</th>
                 </tr>
                 </thead>
                 <tbody>
                 @foreach($complains as $complain)
                     <tr>
-                        <td>{{ $complain->id }}</td>
+                        <td>{{ $complain->id }} | {{ $complain->code }}</td>
                         <td>{{ $complain->order->id }}</td>
                         <td>
                             @component("livewire.components.complainStatus")
@@ -89,6 +131,13 @@
                         <td>{{ $complain->lastUpdatedUser?->name }}</td>
                         <td>{{ $complain->created_at }}</td>
                         <td>{{ \Illuminate\Support\Str::limit($complain->description) }}</td>
+                        <td>
+                            @if($complain->assignee)
+                                {{ $complain->assignee->name }}
+                            @else
+                                غير معيا بعد
+                            @endif
+                        </td>
                         <td>
                             <button wire:click="showComplain({{ $complain->id }})" class="btn btn-primary btn-sm">عرض
                             </button>

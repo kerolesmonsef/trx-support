@@ -9,7 +9,7 @@
     <div class="card-body">
         <div class="row">
             <div class="form-group">
-                <label>اسم المجموعة</label>
+                <label>نوع الاشتراك</label>
                 <input type="text" class="form-control" wire:model.live="name" placeholder="اختياري">
             </div>
 
@@ -46,7 +46,7 @@
                         <div class="col-md-4 mt-3">
                             <div class="card shadow-lg">
                                 <div class="card-header">
-                                    حساب {{ $key + 1 }}
+                                    بروفايل {{ $key + 1 }}
                                 </div>
                                 <div class="card-body">
                                     <div class="row">

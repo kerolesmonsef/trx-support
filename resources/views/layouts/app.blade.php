@@ -22,7 +22,7 @@
     @auth()
         <script src="{{ asset("js/main.js") }}"></script>
         <link href="{{ asset("css/tailwind.min.css") }}" rel="stylesheet">
-
+        <link href="{{ asset("css/admin-main.css") }}" rel="stylesheet">
     @endauth
 </head>
 <body>
@@ -82,7 +82,10 @@
                         @endcan
                         @can("complains")
                             <li class="nav-item">
-                                <a class="nav-link" href="{{ route("complains.index") }}">الشكاوي</a>
+                                <a class="nav-link" href="{{ route("complains.index") }}">
+                                    الشكاوي
+                                    <span class="badge bg-danger">{{ \App\Models\OrderComplain::query()->where("status","pending")->count() }}</span>
+                                </a>
                             </li>
                         @endcan
                         <li class="nav-item dropdown">

@@ -48,15 +48,23 @@
                         <option value="unseen">لم تتم مشاهدته</option>
                     </select>
                 </div>
+                <div class="col-md-4">
+                    <label for="">تمة انتهاء الصلاحية</label>
+                    <select wire:model.live="ended_profile_filter" class="form-control">
+                        <option value="all">الكل</option>
+                        <option value="ended">تم انتهاء الصلاحية</option>
+                        <option value="unended">لم يتم انتهاء الصلاحية</option>
+                    </select>
+                </div>
             </div>
 
             <div class="container mt-3">
                 <div class="row">
-                    <div class="accordion" wire:ignore>
+                    <div class="accordion" >
                         @foreach ($groups as $group)
                                 <?php $accordion_id = "accordion-group-{$group->id}"; ?>
 
-                            <div class="accordion-item mb-4 card border border-dark">
+                            <div class="accordion-item mb-4 card border border-dark" wire:ignore>
                                 <div class="accordion-header" id="headingOne">
                                     <div class="overflow-hidden pt-1 " style="background-color: gainsboro">
                                         <h1 class="h1" data-bs-toggle="collapse" data-bs-target="#{{ $accordion_id }}" style="cursor: pointer;display: inline">{{ $group->id }} - {{ $group->name }}</h1>

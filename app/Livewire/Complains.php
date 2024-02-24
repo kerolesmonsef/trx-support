@@ -31,8 +31,8 @@ class Complains extends Component
 
     private function getComplains(): LengthAwarePaginator
     {
-        return OrderComplain::query()
-            ->with(["order", 'type', 'lastUpdatedUser'])
+        $query = OrderComplain::query()
+            ->with(["order", 'type', 'lastUpdatedUser', 'assignee'])
             ->when($this->status, function (Builder $builder) {
                 $builder->where('order_complains.status', $this->status);
             })
@@ -42,12 +42,18 @@ class Complains extends Component
             ->when($this->search, function (Builder $builder) {
                 $builder->where("description", "LIKE", "%{$this->search}%")
                     ->orWhere("order_id", "LIKE", "%{$this->search}%")
+                    ->orWhere("code", "LIKE", "%{$this->search}%")
                     ->orWhereHas("order", function (Builder $builder) {
                         $builder->where("orders.order_id", "LIKE", "%{$this->search}%");
                     });
             })
-            ->latest()
-            ->paginate();
+            ->latest();
+
+        if (!auth()->user()->hasRole('admin')) {
+            $query->where("assigned_user_id", auth()->id());
+        }
+
+        return $query->paginate();
     }
 
 

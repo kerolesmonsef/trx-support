@@ -30,7 +30,7 @@ class Activity extends \Spatie\Activitylog\Models\Activity
             return "طلب رقم {$this->subject->order_id} تسلسل {$this->subject->id}";
         }
         if ($this->subject instanceof Account){
-            return "حساب رقم {$this->subject->profile} تسلسل{$this->subject->id}";
+            return "بروفايل رقم {$this->subject->profile} تسلسل{$this->subject->id}";
         }
         if ($this->subject instanceof Group){
             return "اسم الميجموعة {$this->subject->name}  تسلسل{$this->subject->id}";

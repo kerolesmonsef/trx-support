@@ -1,3 +1,4 @@
+@php use App\Models\User; @endphp
 <?php
 /** @var \App\Models\OrderComplain $orderComplain */
 ?>
@@ -31,8 +32,9 @@
                     <td>{{ $orderComplain->order->account->profile }}
                 </tr>
                 <tr>
-                    <td>لمجموعة</td>
-                    <td>{{ $orderComplain->order->account->group->id }} | {{ $orderComplain->order->account->group->name }} </td>
+                    <td>المجموعة</td>
+                    <td>{{ $orderComplain->order->account->group->id }}
+                        | {{ $orderComplain->order->account->group->name }} </td>
                 </tr>
             @endif
 
@@ -46,7 +48,35 @@
                             @endforeach
                         </ul>
                     </td>
+                </tr>
             @endif
+            @if(auth()->user()->hasRole("admin"))
+                <tr>
+                    <th>الموظف</th>
+                    <td>
+                        <select class="form-control" wire:model.live="assignee_id" wire:change="updateAssignee">
+                            <option value="">غير معين</option>
+                            @foreach(User::all() as $user)
+                                <option value="{{ $user->id }}">{{ $user->name }}</option>
+                            @endforeach
+                        </select>
+                    </td>
+                </tr>
+            @endif
+
+            <tr>
+                <th>الرد علي التذكرة</th>
+                <td>
+                    <textarea class="form-control" placeholder="اكتب الرد علي التذكرة للعميل" rows="3" wire:model.live="complain_answer"></textarea>
+                    <button class="btn btn-sm btn-primary mt-2" wire:click="updateAnswer">حفظ الرد</button>
+                </td>
+            </tr>
+
+            <tr>
+                <th>التاريخ</th>
+                <td>{{ $orderComplain->created_at }}</td>
+            </tr>
+
             <tr>
                 <th>المشكلة</th>
                 <td>{{ $orderComplain->description }}</td>

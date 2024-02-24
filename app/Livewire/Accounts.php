@@ -24,11 +24,12 @@ class Accounts extends Component
     public $description = "";
     public $accounts_array = [];
 
+
     public $listeners = [
         Trix::EVENT_VALUE_UPDATED // trix_value_updated()
     ];
     public $seen_type = 'all';
-
+    public $ended_profile_filter = "all";
 
     public function trix_value_updated($value)
     {
@@ -38,8 +39,9 @@ class Accounts extends Component
 
     public function render()
     {
+        $groups = $this->getGroups();
         return view('livewire.accounts', [
-            'groups' => $this->getGroups(),
+            'groups' => $groups,
         ]);
     }
 
@@ -51,8 +53,14 @@ class Accounts extends Component
             ->orderBy('id', 'desc')
             ->where(function (Builder $query) {
                 $query->where("name", "like", "%{$this->search}%")
+                    ->orWhere("username", "like", "%{$this->search}%")
+                    ->orWhereHas("accounts", function (Builder $query) {
+                        $query->where("profile", "like", "%{$this->search}%");
+                    })
                     ->orWhereHas("accounts.order", function (Builder $query) {
-                        $query->where("orders.order_id", "like", "%{$this->search}%");
+                        $query
+                            ->where("orders.order_id", "like", "%{$this->search}%")
+                            ->orWhere("orders.secure_phone", "like", "%{$this->search}%");
                     });
             });
 
@@ -63,6 +71,17 @@ class Accounts extends Component
         } elseif ($this->seen_type == "unseen") {
             $query->whereHas("accounts.order", function (Builder $query) {
                 $query->whereNull('seen_at');
+            });
+        }
+
+        if ($this->ended_profile_filter == "ended") {
+            $query->whereHas("accounts", function (Builder $query) {
+                $query->whereDate('subscription_expire_at', "<", now());
+            });
+        }
+        if ($this->ended_profile_filter == "unended") {
+            $query->whereHas("accounts", function (Builder $query) {
+                $query->whereDate('subscription_expire_at', ">=", now());
             });
         }
 
@@ -153,7 +172,7 @@ class Accounts extends Component
                 $existsOrder = Order::where('order_id', $account_array['order_id'])->exists();
             }
             if ($existsOrder && !empty($account_array['order_id'])) {
-                return $this->addError('accounts_array', "الرقم التعريفي للحساب رقم $count موجود من قبل");
+                return $this->addError('accounts_array', "الرقم التعريفي للبروفايل رقم $count موجود من قبل");
             }
         }
 
@@ -175,7 +194,7 @@ class Accounts extends Component
 
             $account->update([
                 'profile' => $account_array['profile'],
-                'subscription_expire_at' => $account_array['subscription_expire_at'],
+                'subscription_expire_at' => $account_array['subscription_expire_at'] ?: null,
             ]);
             $account->order()->update([
                 'order_id' => $account_array['order_id'],
@@ -193,7 +212,7 @@ class Accounts extends Component
     private function store()
     {
         if (empty($this->accounts_array)) {
-            return $this->addError('accounts_array', "الحسابات مطلوبة . برجاء ادخال علي الاقل حساب واحد");
+            return $this->addError('accounts_array', "البروفايلات مطلوبة . برجاء ادخال علي الاقل بروفايل واحد");
         }
 
         foreach ($this->accounts_array as $account_array) {

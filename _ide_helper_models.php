@@ -243,19 +243,29 @@ namespace App\Models{
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property \Illuminate\Support\Carbon|null $deleted_at
+ * @property int|null $last_updated_user_id
+ * @property int|null $assigned_user_id
+ * @property string|null $complain_answer
+ * @property string|null $code
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Activity> $activities
  * @property-read int|null $activities_count
+ * @property-read \App\Models\User|null $assignee
+ * @property-read \App\Models\User|null $lastUpdatedUser
  * @property-read \App\Models\Order $order
  * @property-read \App\Models\ComplainType $type
  * @method static \Illuminate\Database\Eloquent\Builder|OrderComplain newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|OrderComplain newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|OrderComplain onlyTrashed()
  * @method static \Illuminate\Database\Eloquent\Builder|OrderComplain query()
+ * @method static \Illuminate\Database\Eloquent\Builder|OrderComplain whereAssignedUserId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|OrderComplain whereCode($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|OrderComplain whereComplainAnswer($value)
  * @method static \Illuminate\Database\Eloquent\Builder|OrderComplain whereComplainTypeId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|OrderComplain whereCreatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|OrderComplain whereDeletedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|OrderComplain whereDescription($value)
  * @method static \Illuminate\Database\Eloquent\Builder|OrderComplain whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|OrderComplain whereLastUpdatedUserId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|OrderComplain whereOrderId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|OrderComplain whereStatus($value)
  * @method static \Illuminate\Database\Eloquent\Builder|OrderComplain whereUpdatedAt($value)

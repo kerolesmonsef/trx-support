@@ -1,0 +1,36 @@
+
+.countdown-container {
+    background-color: #131416;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    padding: 20px;
+    text-align: center;
+}
+
+.time-display {
+    display: flex;
+    justify-content: space-between;
+}
+
+.time-unit {
+    text-align: center;
+    margin: 0 10px;
+}
+
+.number {
+    font-size: 36px;
+    font-weight: bold;
+    color: #fea84b;
+}
+
+.label {
+    font-size: 14px;
+    color: #666;
+    text-transform: uppercase;
+}
+
+.countdown-message {
+    font-size: 16px;
+    margin-top: 20px;
+    color: #666;
+}
