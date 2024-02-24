@@ -90,7 +90,8 @@ class Accounts extends Component
 
     public function removeGroup($id): void
     {
-        Group::find($id)->delete();
+        Group::find($id)?->delete();
+        session()->flash('message', 'تم مسح المجموعة بنجاح');
     }
 
     public function addAccount(): void
