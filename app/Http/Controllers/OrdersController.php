@@ -58,9 +58,9 @@ class OrdersController extends Controller
             return redirect()->route("orders.security", ["order_id" => $order_id])->with("error", "رقم الطلب خاطئ");
         }
 
-        if (!session()->has("captcha_order_{$order_id}")) {
-            return redirect()->to("/")->with("error", "الرمز الذي قمت بادخاله غير صحيح");
-        }
+//        if (!session()->has("captcha_order_{$order_id}")) {
+//            return redirect()->to("/")->with("error", "الرمز الذي قمت بادخاله غير صحيح");
+//        }
 
 
         if ($order->secure_phone != request('security') && $order->secure_password != request('security')) {
