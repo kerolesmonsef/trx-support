@@ -49,11 +49,11 @@
                     </select>
                 </div>
                 <div class="col-md-4">
-                    <label for="">تمة انتهاء الصلاحية</label>
+                    <label for="">اشتراك البروفايل</label>
                     <select wire:model.live="ended_profile_filter" class="form-control">
                         <option value="all">الكل</option>
-                        <option value="ended">تم انتهاء الصلاحية</option>
-                        <option value="unended">لم يتم انتهاء الصلاحية</option>
+                        <option value="ended">انتهاء مدة اشتراك</option>
+                        <option value="unended">متبقي على مدة اشتراك</option>
                     </select>
                 </div>
             </div>

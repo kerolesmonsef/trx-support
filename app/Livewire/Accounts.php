@@ -141,8 +141,10 @@ class Accounts extends Component
         $this->dispatch('reloadClassicEditor', $this->description);
 
 
-        $this->accounts_array = $group->accounts->load(["order" => function ($q) {
+        $this->accounts_array = $group->accounts->load(["order" => function ( $q) {
+            /** @var Builder $q */
             $q->with("notes");
+            $q->with("complains");
         }])->map(function (Account $account) {
             return [
                 'id' => $account->id,

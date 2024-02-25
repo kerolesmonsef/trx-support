@@ -89,14 +89,23 @@
                                         </div>
                                         <div class="col-md-4">
                                             @if(isset($account['account_object']))
+                                                <?php $order_i = $account['account_object']->order; ?>
                                                 @component("components.order_note_modal")
-                                                    @slot("order",$account['account_object']->order)
+                                                    @slot("order",$order_i)
                                                 @endcomponent
                                                 <div class="form-group">
                                                     اخر كاتب ملاحظة
                                                     <span class="badge bg-secondary">
-                                                        {{ $account['account_object']->order->lastNoteUserName() }}
+                                                        {{ $order_i->lastNoteUserName() }}
                                                     </span>
+                                                </div>
+                                            <hr>
+                                                <div class="form-group">
+                                                    عدد المشاكل
+                                                    {{ $order_i->complains->count() }}
+                                                    <a href="{{ route('complains.index',['order_id'=>$order_i->id]) }}" class="btn btn-info">
+                                                        عرض المشاكل
+                                                    </a>
                                                 </div>
                                             @endif
 

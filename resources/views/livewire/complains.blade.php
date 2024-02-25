@@ -9,7 +9,11 @@
         </div>
         <div class="card-body">
 
-
+            <div class="row">
+                @if($requestOrder)
+                <h1 class="h1">عرض المشاكل الخاصة بطلب رقم [{{ $requestOrder->order_id }}]</h1>
+                @endif
+            </div>
             <div class="row mt-5 align-items-center">
                 <div class="col-md-4">
                     <div class="card bg-warning rounded shadow-sm text-white">

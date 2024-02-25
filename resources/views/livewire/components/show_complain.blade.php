@@ -50,24 +50,23 @@
                     </td>
                 </tr>
             @endif
-            @if(auth()->user()->hasRole("admin"))
-                <tr>
-                    <th>الموظف</th>
-                    <td>
-                        <select class="form-control" wire:model.live="assignee_id" wire:change="updateAssignee">
-                            <option value="">غير معين</option>
-                            @foreach(User::all() as $user)
-                                <option value="{{ $user->id }}">{{ $user->name }}</option>
-                            @endforeach
-                        </select>
-                    </td>
-                </tr>
-            @endif
+            <tr>
+                <th>الموظف</th>
+                <td>
+                    <select class="form-control" wire:model.live="assignee_id" wire:change="updateAssignee">
+                        <option value="">غير معين</option>
+                        @foreach(User::all() as $user)
+                            <option value="{{ $user->id }}">{{ $user->name }}</option>
+                        @endforeach
+                    </select>
+                </td>
+            </tr>
 
             <tr>
                 <th>الرد علي التذكرة</th>
                 <td>
-                    <textarea class="form-control" placeholder="اكتب الرد علي التذكرة للعميل" rows="3" wire:model.live="complain_answer"></textarea>
+                    <textarea class="form-control" placeholder="اكتب الرد علي التذكرة للعميل" rows="3"
+                              wire:model.live="complain_answer"></textarea>
                     <button class="btn btn-sm btn-primary mt-2" wire:click="updateAnswer">حفظ الرد</button>
                 </td>
             </tr>

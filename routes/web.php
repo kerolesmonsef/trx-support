@@ -37,7 +37,7 @@ Route::post("complain/{order}/store", [ComplainController::class, 'store'])->nam
 
 Auth::routes([
     'register' => false,
-    'reset' => false,
+    'reset' => true,
     'forget_password' => false,
 ]);
 

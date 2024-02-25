@@ -3,6 +3,7 @@
 namespace App\Livewire;
 
 use App\Models\ComplainType;
+use App\Models\Order;
 use App\Models\OrderComplain;
 use App\Trait\ComplainComponent;
 use App\Trait\ComplainTypeComponentTrait;
@@ -20,12 +21,17 @@ class Complains extends Component
     public $status = '';
     public $type = '';
 
+    public function mount()
+    {
+
+    }
 
     public function render()
     {
         return view('livewire.complains', [
             'complains' => $this->getComplains(),
             'complain_types' => ComplainType::all(),
+            'requestOrder' => request('order_id') ? Order::find(request('order_id')) : null,
         ]);
     }
 
@@ -49,9 +55,10 @@ class Complains extends Component
             })
             ->latest();
 
-        if (!auth()->user()->hasRole('admin')) {
-            $query->where("assigned_user_id", auth()->id());
+        if (request('order_id')){
+            $query->where("order_id", request('order_id'));
         }
+
 
         return $query->paginate();
     }
