@@ -26,9 +26,23 @@
                     <br>
                     <hr>
                     <div class="form-group">
-                        <label for="terms_and_conditions">الشروط والأحكام في المشاكل</label>
-                        <textarea class="form-control editor"
-                                  name="complain_terms_and_conditions">{{ Settings::valueByKey("complain_terms_and_conditions") }}</textarea>
+                        <label for="terms_and_conditions">الشروط والأحكام في المشاكل البروفايلات</label>
+                        <textarea class="form-control editor" name="complain_account_terms_and_conditions">{{ Settings::valueByKey("complain_account_terms_and_conditions") }}</textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="terms_and_conditions">اوافق الشروط والأحكام في المشاكل البروفايلات</label>
+                        <textarea class="form-control editor" name="accept_complain_account_terms_and_conditions">{{ Settings::valueByKey("accept_complain_account_terms_and_conditions") }}</textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="terms_and_conditions">الشروط والأحكام في المشاكل الكوبونات</label>
+                        <textarea class="form-control editor" name="complain_coupon_terms_and_conditions">{{ Settings::valueByKey("complain_coupon_terms_and_conditions") }}</textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="terms_and_conditions">اوافق الشروط والأحكام في المشاكل الكوبونات</label>
+                        <textarea class="form-control editor" name="accept_complain_coupon_terms_and_conditions">{{ Settings::valueByKey("accept_complain_coupon_terms_and_conditions") }}</textarea>
                     </div>
                     <br>
                     <hr>
