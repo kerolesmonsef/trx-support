@@ -47,4 +47,5 @@ trait ComplainComponent
         ]);
         session()->flash('message', "تم تحديث الموظف بنجاح");
     }
+
 }

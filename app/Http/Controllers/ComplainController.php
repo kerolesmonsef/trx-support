@@ -14,7 +14,7 @@ class ComplainController extends Controller
             'description' => 'required|max:100',
             'complain_type_id' => 'required|exists:complain_types,id',
             'order_id' => 'required|exists:orders,order_id',
-            'captcha' => 'required|captcha',
+            //'captcha' => 'required|captcha', validated on front
         ], [
             'description.required' => 'الوصف مطلوب . برجاء ادخال الوصف',
             'description.max' => 'الوصف يجب ان يكون اقل من 100 حرف',

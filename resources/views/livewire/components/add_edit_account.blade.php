@@ -81,7 +81,7 @@
                                             </div>
                                             <div class="form-group">
                                                 <label>
-                                                    ملاحظة
+                                                    ملاحظة للعميل
                                                     <input type="text" class="form-control"
                                                            wire:model.live="accounts_array.{{ $key }}.note">
                                                 </label>
@@ -99,14 +99,16 @@
                                                         {{ $order_i->lastNoteUserName() }}
                                                     </span>
                                                 </div>
-                                            <hr>
+                                            <hr class="mt-1 mb-1">
                                                 <div class="form-group">
                                                     عدد المشاكل
                                                     {{ $order_i->complains->count() }}
-                                                    <a href="{{ route('complains.index',['order_id'=>$order_i->id]) }}" class="btn btn-info">
+                                                    <a href="{{ route('complains.index',['order_id'=>$order_i->id]) }}" class="text-info text-decoration-underline">
                                                         عرض المشاكل
                                                     </a>
                                                 </div>
+                                                <hr class="mt-1 mb-1">
+                                                @include("livewire.components.update_order_can_ticket",['order' => $order_i])
                                             @endif
 
                                         </div>

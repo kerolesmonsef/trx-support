@@ -226,10 +226,16 @@ $complainTypes = $complainTypes->get();
                 return false;
             }
             if (currentStepIndex === 1 && stepDirection === "forward" && complainCaptcha.length <= 0) {
+                $(".complain-captcha-error").text("من فضلك ادخل الرمز");
                 $(".complain-captcha-error").show();
                 return false;
             }
-
+            if(currentStepIndex === 1 && stepDirection === "forward" && !checkCaptcha(complainCaptcha)){
+                $(".complain-captcha-error").text("من فضلك ادخل الرمز صحيح");
+                $(".complain-captcha-error").show();
+                $('.reload-captcha').trigger("click");
+                return false;
+            }
             $(".invalid-feedback").hide();
             return true;
         });

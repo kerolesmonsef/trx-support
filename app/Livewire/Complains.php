@@ -7,6 +7,7 @@ use App\Models\Order;
 use App\Models\OrderComplain;
 use App\Trait\ComplainComponent;
 use App\Trait\ComplainTypeComponentTrait;
+use App\Trait\UpdateOrderCanTicketTrait;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Database\Eloquent\Builder;
 use Livewire\Component;
@@ -14,7 +15,8 @@ use Livewire\Component;
 class Complains extends Component
 {
     use ComplainTypeComponentTrait,
-        ComplainComponent;
+        ComplainComponent,
+        UpdateOrderCanTicketTrait;
 
     protected $paginationTheme = 'bootstrap';
     public $search = '';
@@ -55,7 +57,7 @@ class Complains extends Component
             })
             ->latest();
 
-        if (request('order_id')){
+        if (request('order_id')) {
             $query->where("order_id", request('order_id'));
         }
 

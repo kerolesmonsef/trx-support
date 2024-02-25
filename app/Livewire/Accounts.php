@@ -6,6 +6,7 @@ use App\Helpers\AccountService;
 use App\Models\Account;
 use App\Models\Group;
 use App\Models\Order;
+use App\Trait\UpdateOrderCanTicketTrait;
 use DB;
 use Illuminate\Database\Eloquent\Builder;
 use Livewire\Component;
@@ -13,7 +14,7 @@ use Livewire\WithPagination;
 
 class Accounts extends Component
 {
-    use WithPagination;
+    use WithPagination, UpdateOrderCanTicketTrait;
 
     protected $paginationTheme = 'bootstrap';
     public $search = '';
@@ -141,7 +142,7 @@ class Accounts extends Component
         $this->dispatch('reloadClassicEditor', $this->description);
 
 
-        $this->accounts_array = $group->accounts->load(["order" => function ( $q) {
+        $this->accounts_array = $group->accounts->load(["order" => function ($q) {
             /** @var Builder $q */
             $q->with("notes");
             $q->with("complains");
@@ -266,4 +267,6 @@ class Accounts extends Component
         $this->resetErrorBag();
         $this->dispatch("trix_clear_value");
     }
+
+
 }

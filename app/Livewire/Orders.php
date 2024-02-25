@@ -5,6 +5,7 @@ namespace App\Livewire;
 use App\Helpers\Helper;
 use App\Models\Coupon;
 use App\Models\Order;
+use App\Trait\UpdateOrderCanTicketTrait;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Validation\Rule;
 use Livewire\Component;
@@ -12,7 +13,7 @@ use Livewire\WithPagination;
 
 class Orders extends Component
 {
-    use WithPagination;
+    use WithPagination, UpdateOrderCanTicketTrait;
 
     public $order_id = "";
     public $price = "0";
@@ -141,4 +142,5 @@ class Orders extends Component
             'seen_at' => null
         ]);
     }
+
 }

@@ -64,10 +64,15 @@
                         @foreach ($groups as $group)
                                 <?php $accordion_id = "accordion-group-{$group->id}"; ?>
 
-                            <div class="accordion-item mb-4 card border border-dark" wire:ignore>
+                            <div class="accordion-item mb-4 card border border-dark">
                                 <div class="accordion-header" id="headingOne">
                                     <div class="overflow-hidden pt-1 " style="background-color: gainsboro">
-                                        <h1 class="h1" data-bs-toggle="collapse" data-bs-target="#{{ $accordion_id }}" style="cursor: pointer;display: inline">{{ $group->id }} - {{ $group->name }}</h1>
+                                        <h1 class="h1" data-bs-toggle="collapse" data-bs-target="#{{ $accordion_id }}" style="cursor: pointer;display: inline">
+                                           <span class="float-start m-3"> <svg width="20" height="20">
+                                                <path d="M0 0 L10 10 L20 0 Z" fill="#000" />
+                                            </svg></span>
+                                            {{ $group->id }} - {{ $group->name }}
+                                        </h1>
                                         <button wire:confirm="هل انت متأكد من الحذف" wire:click="removeGroup({{ $group->id }})" class="btn btn-danger float-end m-1">
                                             <i class="fa fa-trash"></i> حذف المجموعة
                                         </button>
@@ -81,7 +86,6 @@
                                         <div class="card">
                                             <div class="card-header bg-primary text-white">
                                                 بيانات المجموعة
-
                                             </div>
                                             <div class="card-body">
                                                 <div class="row ">

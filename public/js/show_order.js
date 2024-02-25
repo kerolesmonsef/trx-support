@@ -48,3 +48,17 @@ $('a').click(function (event) {
     });
 
 });
+
+
+function checkCaptcha(captcha){
+    let check = false;
+    $.ajax({
+        url: `/captcha-check?captcha=${captcha}`,
+        type: "GET",
+        async: false,
+        success: function (response) {
+            check = response.captcha;
+        }
+    });
+    return check;
+}

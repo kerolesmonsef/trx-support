@@ -26,6 +26,7 @@ use Mpdf\Mpdf;
 
 
 Route::get('captcha-refresh', [CaptchaController::class, 'refresh'])->name('captcha.refresh');
+Route::get('captcha-check', [CaptchaController::class, 'check'])->name('captcha.check');
 
 Route::get('/', [OrdersController::class, 'welcome'])->name("welcome");
 

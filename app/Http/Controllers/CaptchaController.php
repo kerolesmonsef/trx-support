@@ -10,4 +10,9 @@ class CaptchaController extends Controller
     {
         return response()->json(['captcha' => captcha_img()]);
     }
+
+    public function check()
+    {
+        return response()->json(['captcha' => captcha_check(request('captcha',''))]);
+    }
 }
