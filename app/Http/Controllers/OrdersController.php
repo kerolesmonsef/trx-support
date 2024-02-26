@@ -64,7 +64,7 @@ class OrdersController extends Controller
 
 
         if ($order->secure_phone != request('security')) {
-            return redirect()->route("orders.security", ["order_id" => $order_id])->with("error", "رقم السري خاطئ");
+            return redirect()->route("orders.security", ["order_id" => $order_id])->with("error", "رقم جوال غير صحيح");
         }
 
         $order->update([
