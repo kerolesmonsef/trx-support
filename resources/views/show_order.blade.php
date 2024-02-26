@@ -59,7 +59,7 @@ $complainTypes = $complainTypes->get();
                                 <span class="float-start badge bg-warning copy mt-2" style="cursor: pointer">نسخ </span>
                             </li>
                             <li class="list-group-item" style="color: black">
-                                البروفايل : <span class="code">{{ $order->account->profile }}</span>
+                                البروفايل : <span class="code">{{ $order->account->profile ?: "لا يوجد" }}</span>
                             </li>
                         @else
                             @forelse($order->coupons as $coupon)

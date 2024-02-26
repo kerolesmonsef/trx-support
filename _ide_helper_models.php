@@ -167,15 +167,18 @@ namespace App\Models{
  * @property \Illuminate\Support\Carbon $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property int|null $last_updated_user_id
+ * @property int|null $creator_user_id
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Account> $accounts
  * @property-read int|null $accounts_count
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Activity> $activities
  * @property-read int|null $activities_count
+ * @property-read \App\Models\User|null $creator
  * @property-read \App\Models\User|null $lastUpdatedUser
  * @method static \Illuminate\Database\Eloquent\Builder|Group newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Group newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Group query()
  * @method static \Illuminate\Database\Eloquent\Builder|Group whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Group whereCreatorUserId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Group whereDescription($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Group whereId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Group whereLastUpdatedUserId($value)
@@ -203,6 +206,7 @@ namespace App\Models{
  * @property string|null $secure_password
  * @property int|null $warning_rank
  * @property string|null $warning_message
+ * @property int $can_ticket
  * @property-read \App\Models\Account|null $account
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Activity> $activities
  * @property-read int|null $activities_count
@@ -215,6 +219,7 @@ namespace App\Models{
  * @method static \Illuminate\Database\Eloquent\Builder|Order newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Order newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Order query()
+ * @method static \Illuminate\Database\Eloquent\Builder|Order whereCanTicket($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Order whereCreatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Order whereId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Order whereNote($value)

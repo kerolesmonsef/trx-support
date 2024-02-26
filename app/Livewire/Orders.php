@@ -19,7 +19,6 @@ class Orders extends Component
     public $price = "0";
     public $note = "";
     public $secure_phone = "";
-    public $secure_password = "";
     public $order = ""; // create or update
     public $coupons = [];
     public $search = '';
@@ -69,7 +68,6 @@ class Orders extends Component
                 'price' => $this->price,
                 'note' => $this->note,
                 'secure_phone' => $this->secure_phone,
-                'secure_password' => $this->secure_password,
             ]);
         } else { // create
             $this->validate(Helper::onCreateValidationArray($this->coupons));
@@ -78,7 +76,6 @@ class Orders extends Component
                 'price' => $this->price,
                 'note' => $this->note,
                 'secure_phone' => $this->secure_phone,
-                'secure_password' => $this->secure_password,
             ]);
         }
 
@@ -90,7 +87,6 @@ class Orders extends Component
         $this->price = "0";
         $this->note = "";
         $this->secure_phone = "";
-        $this->secure_password = "";
     }
 
     public function delete($order_id)
@@ -107,7 +103,6 @@ class Orders extends Component
         $this->price = $order->price;
         $this->note = $order->note;
         $this->secure_phone = $order->secure_phone;
-        $this->secure_password = $order->secure_password;
         $this->coupons = Coupon::where('order_id', $order_id)->get()->toArray();
     }
 

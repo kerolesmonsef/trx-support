@@ -32,7 +32,6 @@
                 <div wire:ignore>
                     <textarea class="editor">{{ $description }}</textarea>
                 </div>
-                {{--                @livewire('trix', ['value' => $description])--}}
             </div>
             <div class="col-md-12">
                 <h2 class="text-center">البروفايلات</h2>
@@ -54,7 +53,7 @@
                                             <div class="form-group">
                                                 <label>
                                                     رقم الطلب
-                                                    <input type="text" class="form-control"
+                                                    <input type="number" class="form-control"
                                                            wire:model.live="accounts_array.{{ $key }}.order_id">
                                                 </label>
                                             </div>
@@ -67,8 +66,8 @@
                                             </div>
                                             <div class="form-group">
                                                 <label>
-                                                    أضافة حماية رقم هاتف
-                                                    <input type="text" class="form-control"
+                                                    إضافة اخر 4 ارقام من هاتف
+                                                    <input type="number" class="form-control"
                                                            wire:model.live="accounts_array.{{ $key }}.secure_phone">
                                                 </label>
                                             </div>
@@ -161,6 +160,7 @@
             <div class="col-md-12 mt-1">
                 <div>
                     <button class="btn btn-primary" wire:click="save">حفظ</button>
+                    <button class="btn btn-secondary" wire:click="cancel">الغاء</button>
                 </div>
             </div>
         </div>
@@ -168,25 +168,7 @@
 </div>
 
 @push("scripts")
-{{--    <script>--}}
-{{--           ClassicEditor--}}
-{{--               .create(document.querySelector('.editor'))--}}
-{{--               .then(editor => {--}}
-{{--                   editor.model.document.on('change:data', () => {--}}
-{{--                       const content = editor.getData();--}}
 
-{{--                   @this.set('description', content);--}}
-{{--                   });--}}
-{{--               })--}}
-{{--               .catch(error => {--}}
-{{--                   console.error(error);--}}
-{{--               });--}}
-
-
-{{--        Livewire.on('reloadClassicEditor', () => {--}}
-{{--           // here i want to reload the ckeditor please help me--}}
-{{--        })--}}
-{{--    </script>--}}
 
 <script>
     let editorInstance; // Variable to store CKEditor instance

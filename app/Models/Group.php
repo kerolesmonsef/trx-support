@@ -28,4 +28,9 @@ class Group extends Model
     {
         return $this->belongsTo(User::class, 'last_updated_user_id');
     }
+
+    public function creator(): BelongsTo
+    {
+        return $this->belongsTo(User::class, 'creator_user_id');
+    }
 }

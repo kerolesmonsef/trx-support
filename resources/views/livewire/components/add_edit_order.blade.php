@@ -11,7 +11,7 @@
             <div class="col-md-12">
                 <div class="form-group">
                     <label>رقم الطلب</label>
-                    <input type="text" class="form-control" wire:model.live="order_id">
+                    <input type="number" class="form-control" wire:model.live="order_id">
                 </div>
             </div>
             <div class="form-group">
@@ -27,12 +27,6 @@
                     <div class="form-group">
                         <label>اضافة حماية رقم هاتف</label>
                         <input type="text" class="form-control" wire:model.live="secure_phone">
-                    </div>
-                </div>
-                <div class="col-md-6">
-                    <div class="form-group">
-                        <label>اضافة حماية كلمة مرور</label>
-                        <input type="text" class="form-control" wire:model.live="secure_password">
                     </div>
                 </div>
             </div>

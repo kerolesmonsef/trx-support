@@ -109,11 +109,14 @@
 
                                                         </div>
                                                         <div class="row mb-3">
-                                                            <div class="col-md-6 text-end">
+                                                            <div class="col-md-4 text-end">
                                                                 <span class="badge bg-secondary">{{ $group->password }}</span> : الرقم السري
                                                             </div>
-                                                            <div class="col-md-6 text-end">
+                                                            <div class="col-md-4 text-end">
                                                                 <span class="badge bg-secondary">{{ Carbon::parse($group->updated_at)->diffForHumans() }}</span> : اخر تحديث
+                                                            </div>
+                                                            <div class="col-md-4 text-end">
+                                                                <span class="badge bg-secondary">{{ $group->creator?->name }}</span> : منشي المجموعة
                                                             </div>
                                                         </div>
                                                     </div>

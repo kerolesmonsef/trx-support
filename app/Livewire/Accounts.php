@@ -25,18 +25,8 @@ class Accounts extends Component
     public $description = "";
     public $accounts_array = [];
 
-
-    public $listeners = [
-        Trix::EVENT_VALUE_UPDATED // trix_value_updated()
-    ];
     public $seen_type = 'all';
     public $ended_profile_filter = "all";
-
-    public function trix_value_updated($value)
-    {
-        $this->description = $value;
-    }
-
 
     public function render()
     {
@@ -133,12 +123,14 @@ class Accounts extends Component
     public function edit($group_id): void
     {
         $group = Group::find($group_id);
+        if (!$group) {
+            return;
+        }
         $this->group_id = $group_id;
         $this->name = $group->name;
         $this->username = $group->username;
         $this->password = $group->password;
         $this->description = $group->description;
-        $this->dispatch("trix_set_value", $this->description);
         $this->dispatch('reloadClassicEditor', $this->description);
 
 
@@ -220,9 +212,9 @@ class Accounts extends Component
         }
 
         foreach ($this->accounts_array as $account_array) {
-            $existsOrder = Order::where('order_id', $account_array['order_id'])->exists();
+            $existsOrder = Order::where('order_id', $order_id = $account_array['order_id'])->exists();
             if ($existsOrder && !empty($account_array['order_id'])) {
-                return $this->addError('accounts_array', "الرقم التعريفي موجود من قبل");
+                return $this->addError('accounts_array', "رقم الطلب $order_id موجود من قبل");
             }
         }
 
@@ -235,9 +227,9 @@ class Accounts extends Component
         ]);
 
         foreach ($this->accounts_array as $account_array) {
-            $existsOrder = Order::where('order_id', $account_array['order_id'])->exists();
+            $existsOrder = Order::where('order_id', $order_id = $account_array['order_id'])->exists();
             if ($existsOrder && !empty($account_array['order_id'])) {
-                return $this->addError('accounts_array', "الرقم التعريفي موجود من قبل");
+                return $this->addError('accounts_array', "رقم الطلب $order_id موجود من قبل");
             }
         }
 
@@ -246,6 +238,7 @@ class Accounts extends Component
             'description' => $this->description,
             'username' => $this->username,
             'password' => $this->password,
+            'creator_user_id' => auth()->id(),
         ]);
         foreach ($this->accounts_array as $accountArray) {
             app(AccountService::class)->store($group, $accountArray);
@@ -265,8 +258,11 @@ class Accounts extends Component
         $this->password = "";
 
         $this->resetErrorBag();
-        $this->dispatch("trix_clear_value");
     }
 
+    public function cancel()
+    {
+        $this->clearData();
+    }
 
 }

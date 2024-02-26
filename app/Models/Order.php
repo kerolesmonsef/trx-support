@@ -65,7 +65,7 @@ class Order extends Model
 
     public function hasSecurity(): bool
     {
-        return $this->secure_phone || $this->secure_password;
+        return $this->secure_phone;
     }
 
     public function coupons_price()
