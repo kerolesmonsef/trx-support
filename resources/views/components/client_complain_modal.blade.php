@@ -55,11 +55,9 @@
                         <div class="modal-body">
                             <div class="mb-3">
                                 <label for="complainType" class="form-label w-color">نوع المشكلة</label>
-                                <select class="form-control complain-input" name="complain_type_id"
-                                        id="complainType">
+                                <select class="form-control complain-input" name="complain_type_id" id="complainType">
                                     @foreach($complainTypes as $complainType)
-                                        <option
-                                            @if(old('complain_type_id') == $complainType->id) selected @endif
+                                        <option @if(old('complain_type_id') == $complainType->id) selected @endif
                                         value="{{ $complainType->id }}">{{ $complainType->name }}</option>
                                     @endforeach
                                 </select>

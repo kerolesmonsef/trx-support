@@ -84,6 +84,7 @@ class OrdersController extends Controller
 
 
         $order->timestamps = false;
+
         if ($order->hasSecurity()) {
             return redirect()->route("orders.security", ["order_id" => $order_id]);
         }

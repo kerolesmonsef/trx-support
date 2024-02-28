@@ -65,13 +65,15 @@ class Order extends Model
 
     public function hasSecurity(): bool
     {
-        return $this->secure_phone;
+        return !!$this->secure_phone;
     }
 
     public function coupons_price()
     {
         return $this->coupons->sum("price");
     }
+
+
 
     public function account(): HasOne
     {

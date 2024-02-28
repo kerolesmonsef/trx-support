@@ -1,4 +1,8 @@
-@php use App\Models\Settings;use Carbon\Carbon; @endphp
+@php
+ use App\Helpers\OrderCollectionDto;
+ use App\Models\Settings;
+ use Carbon\Carbon;
+ @endphp
 <?php
 /** @var $order \App\Models\Order */
 $complainTypes = \App\Models\ComplainType::query();
@@ -8,6 +12,7 @@ if ($order->hasAccount()) {
     $complainTypes->where("type", "coupon");
 }
 $complainTypes = $complainTypes->get();
+$orderDto = OrderCollectionDto::related($order);
 ?>
 @extends("order_master")
 
@@ -21,65 +26,14 @@ $complainTypes = $complainTypes->get();
 
 @endpush
 @section("content")
-    <title>Trx Support | order id {{ $order->order_id }}</title>
+    <title>{{ config("app.name") }} | order id {{ $orderDto->getOrderId() }}</title>
     <div class="container mt-4">
         <table class="table table-bordered" dir="rtl">
             <tr>
                 <th class=" w-color">رقم الطلب</th>
-                <td style="color: white">{{$order->order_id}}</td>
+                <td style="color: white">{{ $orderDto->getOrderId() }}</td>
             </tr>
-            @if($order->price)
-                <tr>
-                    <th class="text-right w-color">سعر الطلب</th>
-                    <td>
-                        <span class="badge bg-secondary ">
-                                {{ $order->price }} $
-                        </span>
-                    </td>
-                </tr>
-            @endif
-            <tr>
-                <th class="text-right w-color">
-                    @if($order->hasAccount())
-                        الحساب
-                    @else
-                        الكوبونات
-                    @endif
-                </th>
-                <td>
-                    <ul class="list-group" style="background-color: #131416">
-                        @if($order->hasAccount())
-                            <li class="list-group-item" style="color: black">
-                                ايميل الدخول : <span
-                                    class="code">{{ $order->account->group->username }}</span>
-                                <span class="float-start badge bg-warning copy mt-2" style="cursor: pointer">نسخ </span>
-                            </li>
-                            <li class="list-group-item" style="color: black">
-                                الرقم السري : <span class="code">{{ $order->account->group->password }}</span>
-                                <span class="float-start badge bg-warning copy mt-2" style="cursor: pointer">نسخ </span>
-                            </li>
-                            <li class="list-group-item" style="color: black">
-                                البروفايل : <span class="code">{{ $order->account->profile ?: "لا يوجد" }}</span>
-                            </li>
-                        @else
-                            @forelse($order->coupons as $coupon)
-                                <li class="list-group-item" style="color: black">
-                                    <span style="font-weight: bold;font-size: 20px">
-                                        {{ $loop->index + 1  }} - <span class="code">{{ $coupon->code }}</span>
-                                    </span>
-                                    <span
-                                        class="float-start badge bg-secondary"> سعر الكوبون{{ $coupon->price }} $</span>
-                                    <br>
-                                    <span class="float-start badge bg-warning copy mt-2" style="cursor: pointer">نسخ الكود</span>
-                                </li>
-                            @empty
-                                <li class="list-group-item">لا توجد كوبونات</li>
-                            @endforelse
-                        @endif
-
-                    </ul>
-                </td>
-            </tr>
+            @include("components.order_details_tr")
             <tr>
                 <th class="text-right w-color">اخر تحديث</th>
                 <td>
@@ -99,7 +53,7 @@ $complainTypes = $complainTypes->get();
                             <span class="text-white">لديك تحزير من الدرجة</span>
                             <span class="badge " style="background-color: yellow;color: black">1</span>
                         @elseif($order->warning_rank == 2)
-                            <span class="text-white">لديك تحزير من الدرجة</span>
+                            <span class="text-white">لديك تحذير من الدرجة</span>
                             <span class="badge bg-warning">2</span>
                         @elseif($order->warning_rank == 3)
                             <span class="text-white">لديك تحزير من الدرجة</span>
@@ -130,23 +84,25 @@ $complainTypes = $complainTypes->get();
             </tr>
         </table>
 
-        <h5 class="card-title text-center w-color toggle-privacy" style="cursor: pointer" data-target=".privacy_content">
+        <h5 class="card-title text-center w-color toggle-privacy" style="cursor: pointer"
+            data-target=".privacy_content">
 
         </h5>
 
 
-
         <div class="accordion" id="accordionExample">
             <div class="accordion-item">
-                <h2 class="accordion-header" id="headingOne" >
-                    <button class="accordion-button w-color" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne"
+                <h2 class="accordion-header" id="headingOne">
+                    <button class="accordion-button w-color" type="button" data-bs-toggle="collapse"
+                            data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne"
                             style=" background-color: #131416;"
                             dir="rtl"
                     >
                         السياسة والشروط
                     </button>
                 </h2>
-                <div id="collapseOne" class="accordion-collapse collapse" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
+                <div id="collapseOne" class="accordion-collapse collapse" aria-labelledby="headingOne"
+                     data-bs-parent="#accordionExample">
                     <div class="accordion-body bg-dark border-white">
 
                         <div dir="rtl" style="color: white">
@@ -161,7 +117,6 @@ $complainTypes = $complainTypes->get();
             </div>
 
         </div>
-
 
 
         <a style="display: block;
@@ -230,7 +185,7 @@ $complainTypes = $complainTypes->get();
                 $(".complain-captcha-error").show();
                 return false;
             }
-            if(currentStepIndex === 1 && stepDirection === "forward" && !checkCaptcha(complainCaptcha)){
+            if (currentStepIndex === 1 && stepDirection === "forward" && !checkCaptcha(complainCaptcha)) {
                 $(".complain-captcha-error").text("من فضلك ادخل الرمز صحيح");
                 $(".complain-captcha-error").show();
                 $('.reload-captcha').trigger("click");
@@ -240,7 +195,7 @@ $complainTypes = $complainTypes->get();
             return true;
         });
 
-        $(".toggle-privacy").click(function() {
+        $(".toggle-privacy").click(function () {
             const target = $(this).data("target");
             $(target).toggle();
         });
