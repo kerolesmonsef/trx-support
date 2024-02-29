@@ -65,6 +65,10 @@
                         @endforeach
                     </select>
                 </div>
+                <div class="col-md-3">
+                    <label for="">بحث برقم الطلب</label>
+                    <input type="search" wire:model.live="filter_order_id" class="form-control" placeholder="بحث">
+                </div>
             </div>
 
             <div class="container mt-3">

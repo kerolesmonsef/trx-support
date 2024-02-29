@@ -27,7 +27,7 @@ class Accounts extends Component
     public $description = "";
     public $group_creator_id = "";
 
-
+    public $filter_order_id = "";
     public $seen_type = 'all';
     public $ended_profile_filter = "all";
 
@@ -91,6 +91,12 @@ class Accounts extends Component
 
         if ($this->group_creator_id) {
             $query->where('creator_user_id', $this->group_creator_id);
+        }
+
+        if ($this->filter_order_id) {
+            $query->whereHas("accounts.order", function (Builder $query) {
+                $query->where('order_id', $this->filter_order_id);
+            });
         }
 
         return $query->paginate();
