@@ -250,6 +250,8 @@ $orderDto = OrderCollectionDto::related($order);
                 $(".complain-captcha-error").show();
                 return false;
             }
+            $(".invalid-feedback").hide();
+
             if (currentStepIndex === 1 && stepDirection === "forward" && !checkCaptcha(complainCaptcha)) {
                 $(".complain-captcha-error").text("من فضلك ادخل الرمز صحيح");
                 $(".complain-captcha-error").show();
