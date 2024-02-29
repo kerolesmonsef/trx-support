@@ -245,6 +245,8 @@ $orderDto = OrderCollectionDto::related($order);
                 $(".complain-error").show();
                 return false;
             }
+            $(".invalid-feedback").hide();
+
             if (currentStepIndex === 1 && stepDirection === "forward" && complainCaptcha.length <= 0) {
                 $(".complain-captcha-error").text("من فضلك ادخل الرمز");
                 $(".complain-captcha-error").show();
