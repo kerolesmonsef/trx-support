@@ -35,7 +35,7 @@ class Helper
         session()->put("captcha_order_{$order_id}","pass");
     }
 
-    public static function onUpdateValidationArray($coupons, $order_id): array
+    public static function onUpdateValidationArray($coupons): array
     {
         $couponIds = array_map(function ($coupon) {
             return $coupon['id'] ?? null;
@@ -43,7 +43,7 @@ class Helper
 
         $couponIds = array_filter($couponIds);
         return [
-            'order_id' => "required|unique:orders,order_id,{$order_id}",
+            'order_id' => "required",
             'price' => ['required'],
             'coupons.*.code' => ['required', Rule::unique('coupons', 'code')->where(function ($query) use ($couponIds) {
                 $query->whereNotIn('id', $couponIds);

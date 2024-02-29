@@ -25,6 +25,17 @@ class Orders extends Component
     public $seen_type = 'all';
     protected $paginationTheme = 'bootstrap';
 
+    protected $listeners = [
+        DuplicatedAccountIdModal::ACCEPT_EVENT_NAME => 'acceptDuplicatedAccountId',
+    ];
+
+
+    public function acceptDuplicatedAccountId($data): void
+    {
+        $action = $data['action'];
+        $this->$action();
+    }
+
     public function render()
     {
         return view('livewire.orders', [
@@ -65,7 +76,11 @@ class Orders extends Component
             $this->validateBeforeStore();
         }
 
-        session()->flash('message', 'تم الحفظ بنجاح');
+
+    }
+
+    protected function clearData(): void
+    {
         $this->coupons = [];
         $this->order = "";
         $this->order_id = "";
@@ -76,18 +91,39 @@ class Orders extends Component
 
     public function validateBeforeUpdate()
     {
-        $this->validate(Helper::onUpdateValidationArray($this->coupons, $this->order));
+        $this->validate(Helper::onUpdateValidationArray($this->coupons));
 
-        $this->update();
+        $existsOrder = Order::where('order_id', $this->order_id)->where('id', '!=', $this->order)->first();
+
+        if ($existsOrder) {
+            $this->dispatch("openModal", component: 'duplicated-account-id-modal', arguments: [
+                'orderIds' => [$this->order_id],
+                'action' => "update",
+                'username' => null,
+            ]);
+        } else {
+            $this->update();
+        }
     }
 
     public function validateBeforeStore()
     {
-        $this->validate(Helper::onCreateCouponValidationArray($this->coupons));
-        $this->store();
+        $this->validate(Helper::onCreateCouponValidationArray());
+
+        $existsOrder = Order::where('order_id', $this->order_id)->first();
+
+        if ($existsOrder) {
+            $this->dispatch("openModal", component: 'duplicated-account-id-modal', arguments: [
+                'orderIds' => [$this->order_id],
+                'action' => "store",
+                'username' => null,
+            ]);
+        } else {
+            $this->store();
+        }
     }
 
-    public function update(): \Illuminate\Database\Eloquent\Model|Order|\Illuminate\Database\Eloquent\Collection|array|null
+    public function update()
     {
         $order = Order::find($this->order);
         $order->update([
@@ -97,13 +133,14 @@ class Orders extends Component
             'secure_phone' => $this->secure_phone,
         ]);
         $this->saveCoupons($order);
-
+        session()->flash('message', 'تم الحفظ بنجاح');
+        $this->clearData();
         return $order;
     }
 
     public function store(): void
     {
-        $order =Order::create([
+        $order = Order::create([
             'order_id' => $this->order_id,
             'price' => $this->price,
             'note' => $this->note,
@@ -111,6 +148,8 @@ class Orders extends Component
         ]);
 
         $this->saveCoupons($order);
+        session()->flash('message', 'تم الحفظ بنجاح');
+        $this->clearData();
     }
 
     public function delete($order_id)
