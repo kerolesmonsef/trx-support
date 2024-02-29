@@ -70,7 +70,7 @@ class Orders extends Component
                 'secure_phone' => $this->secure_phone,
             ]);
         } else { // create
-            $this->validate(Helper::onCreateValidationArray($this->coupons));
+            $this->validate(Helper::onCreateCouponValidationArray($this->coupons));
             $order = Order::create([
                 'order_id' => $this->order_id,
                 'price' => $this->price,

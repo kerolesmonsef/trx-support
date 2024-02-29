@@ -7,6 +7,7 @@ use Carbon\Carbon;
 use Illuminate\Database\Events\QueryExecuted;
 use Illuminate\Pagination\Paginator;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider

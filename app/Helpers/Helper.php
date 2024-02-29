@@ -52,10 +52,10 @@ class Helper
         ];
     }
 
-    public static function onCreateValidationArray(): array
+    public static function onCreateCouponValidationArray(): array
     {
         return [
-            'order_id' => 'required|unique:orders',
+            'order_id' => 'required',
             'coupons.*.code' => ['required', 'unique:coupons,code'],
         ];
     }
