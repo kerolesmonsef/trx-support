@@ -6,6 +6,7 @@ use App\Helpers\AccountService;
 use App\Models\Account;
 use App\Models\Group;
 use App\Models\Order;
+use App\Models\User;
 use App\Trait\SaveAccountTrait;
 use App\Trait\UpdateOrderCanTicketTrait;
 use DB;
@@ -24,6 +25,7 @@ class Accounts extends Component
     public $username = "";
     public $password = "";
     public $description = "";
+    public $group_creator_id = "";
 
 
     public $seen_type = 'all';
@@ -32,6 +34,12 @@ class Accounts extends Component
     protected $listeners = [
         DuplicatedAccountIdModal::ACCEPT_EVENT_NAME => 'acceptDuplicatedAccountId',
     ];
+    public $users;
+
+    public function mount()
+    {
+        $this->users = User::all();
+    }
 
     public function render()
     {
@@ -79,6 +87,10 @@ class Accounts extends Component
             $query->whereHas("accounts", function (Builder $query) {
                 $query->whereDate('subscription_expire_at', ">=", now());
             });
+        }
+
+        if ($this->group_creator_id) {
+            $query->where('creator_user_id', $this->group_creator_id);
         }
 
         return $query->paginate();

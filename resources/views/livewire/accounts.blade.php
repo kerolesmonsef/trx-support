@@ -1,4 +1,4 @@
-@php use Carbon\Carbon; @endphp
+@php use App\Models\User;use Carbon\Carbon; @endphp
 <?php
 /** @var $group \App\Models\Group */
 ?>
@@ -36,11 +36,11 @@
 
             <hr>
             <div class="row">
-                <div class="col-md-4">
+                <div class="col-md-3">
                     <label for="">بحث</label>
                     <input type="search" wire:model.live="search" class="form-control" placeholder="بحث">
                 </div>
-                <div class="col-md-4">
+                <div class="col-md-3">
                     <label for="">تمة مشاهدة الطلب</label>
                     <select wire:model.live="seen_type" class="form-control">
                         <option value="all">الكل</option>
@@ -48,7 +48,7 @@
                         <option value="unseen">لم تتم مشاهدته</option>
                     </select>
                 </div>
-                <div class="col-md-4">
+                <div class="col-md-3">
                     <label for="">اشتراك البروفايل</label>
                     <select wire:model.live="ended_profile_filter" class="form-control">
                         <option value="all">الكل</option>
@@ -56,32 +56,46 @@
                         <option value="unended">متبقي على مدة اشتراك</option>
                     </select>
                 </div>
+                <div class="col-md-3">
+                    <label for="">منشئ المجموعة</label>
+                    <select wire:model.live="group_creator_id" class="form-control">
+                        <option value="">الكل</option>
+                        @foreach($users as $user)
+                           <option value="{{ $user->id }}">{{ $user->name }}</option>
+                        @endforeach
+                    </select>
+                </div>
             </div>
 
             <div class="container mt-3">
                 <div class="row">
-                    <div class="accordion" >
+                    <div class="accordion">
                         @foreach ($groups as $group)
                                 <?php $accordion_id = "accordion-group-{$group->id}"; ?>
 
                             <div class="accordion-item mb-4 card border border-dark">
                                 <div class="accordion-header" id="headingOne">
                                     <div class="overflow-hidden pt-1 " style="background-color: gainsboro">
-                                        <h1 class="h1" data-bs-toggle="collapse" data-bs-target="#{{ $accordion_id }}" style="cursor: pointer;display: inline">
+                                        <h1 class="h1" data-bs-toggle="collapse" data-bs-target="#{{ $accordion_id }}"
+                                            style="cursor: pointer;display: inline">
                                            <span class="float-start m-3"> <svg width="20" height="20">
-                                                <path d="M0 0 L10 10 L20 0 Z" fill="#000" />
+                                                <path d="M0 0 L10 10 L20 0 Z" fill="#000"/>
                                             </svg></span>
                                             {{ $group->id }} - {{ $group->name }}
                                         </h1>
-                                        <button wire:confirm="هل انت متأكد من الحذف" wire:click="removeGroup({{ $group->id }})" class="btn btn-danger float-end m-1">
+                                        <button wire:confirm="هل انت متأكد من الحذف"
+                                                wire:click="removeGroup({{ $group->id }})"
+                                                class="btn btn-danger float-end m-1">
                                             <i class="fa fa-trash"></i> حذف المجموعة
                                         </button>
-                                        <button wire:click="edit({{ $group->id }})" class="btn btn-primary float-end m-1">
+                                        <button wire:click="edit({{ $group->id }})"
+                                                class="btn btn-primary float-end m-1">
                                             <i class="fa fa-edit"></i> تعديل المجموعة
                                         </button>
                                     </div>
                                 </div>
-                                <div id="{{ $accordion_id }}" class="accordion-collapse collapse" aria-labelledby="headingOne">
+                                <div id="{{ $accordion_id }}" class="accordion-collapse collapse"
+                                     aria-labelledby="headingOne">
                                     <div class="accordion-body">
                                         <div class="card">
                                             <div class="card-header bg-primary text-white">
@@ -90,7 +104,8 @@
                                             <div class="card-body">
                                                 <div class="row ">
                                                     <div class="col-md-6">
-                                                        <button class="btn btn-sm btn-info" wire:click="$dispatch('openModal', { component: 'show-group-activities' , arguments :{group_id:'{{ $group->id }}'} },)">
+                                                        <button class="btn btn-sm btn-info"
+                                                                wire:click="$dispatch('openModal', { component: 'show-group-activities' , arguments :{group_id:'{{ $group->id }}'} },)">
                                                             عرض التحديثات
                                                         </button>
                                                         <br>
@@ -98,25 +113,37 @@
                                                     <div class="col-md-6 ">
                                                         <div class="row mb-3">
                                                             <div class="col-md-4 text-end">
-                                                                <span class="badge bg-secondary">{{ $group->lastUpdatedUser?->name }}</span> : اخر من قام بالتعديل
+                                                                <span
+                                                                    class="badge bg-secondary">{{ $group->lastUpdatedUser?->name }}</span>
+                                                                : اخر من قام بالتعديل
                                                             </div>
                                                             <div class="col-md-4 text-end">
-                                                                <span class="badge bg-secondary">{{ $group->accounts_count }}</span> : عدد البروفايلات
+                                                                <span
+                                                                    class="badge bg-secondary">{{ $group->accounts_count }}</span>
+                                                                : عدد البروفايلات
                                                             </div>
                                                             <div class="col-md-4 text-end">
-                                                                <span class="badge bg-secondary">{{ $group->username }}</span> : البريد الالكتروني
+                                                                <span
+                                                                    class="badge bg-secondary">{{ $group->username }}</span>
+                                                                : البريد الالكتروني
                                                             </div>
 
                                                         </div>
                                                         <div class="row mb-3">
                                                             <div class="col-md-4 text-end">
-                                                                <span class="badge bg-secondary">{{ $group->password }}</span> : الرقم السري
+                                                                <span
+                                                                    class="badge bg-secondary">{{ $group->password }}</span>
+                                                                : الرقم السري
                                                             </div>
                                                             <div class="col-md-4 text-end">
-                                                                <span class="badge bg-secondary">{{ Carbon::parse($group->updated_at)->diffForHumans() }}</span> : اخر تحديث
+                                                                <span
+                                                                    class="badge bg-secondary">{{ Carbon::parse($group->updated_at)->diffForHumans() }}</span>
+                                                                : اخر تحديث
                                                             </div>
                                                             <div class="col-md-4 text-end">
-                                                                <span class="badge bg-secondary">{{ $group->creator?->name }}</span> : منشي المجموعة
+                                                                <span
+                                                                    class="badge bg-secondary">{{ $group->creator?->name }}</span>
+                                                                : منشي المجموعة
                                                             </div>
                                                         </div>
                                                     </div>
