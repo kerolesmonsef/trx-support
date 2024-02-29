@@ -1,4 +1,3 @@
-
 const timeUnits = ['days', 'hours', 'minutes', 'seconds'];
 
 const getTimeRemaining = () => {
@@ -12,7 +11,7 @@ const getTimeRemaining = () => {
     const seconds = Math.floor((difference % (1000 * 60)) / 1000);
 
     // Return an object with time values
-    return { days, hours, minutes, seconds };
+    return {days, hours, minutes, seconds};
 };
 
 const updateCountdown = () => {
@@ -20,6 +19,7 @@ const updateCountdown = () => {
 
     timeUnits.forEach((unit, index) => {
         const numberElement = document.querySelector(`.time-unit.${unit} .number`);
+        if (numberElement) return;
         numberElement.textContent = String(timeRemaining[unit]).padStart(2, '0');
     });
 

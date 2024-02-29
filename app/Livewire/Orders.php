@@ -59,34 +59,58 @@ class Orders extends Component
     {
         if ($this->order) {// update
 
+            $this->validateBeforeUpdate();
 
-            $this->validate(Helper::onUpdateValidationArray($this->coupons, $this->order));
-
-            $order = Order::find($this->order);
-            $order->update([
-                'order_id' => $this->order_id,
-                'price' => $this->price,
-                'note' => $this->note,
-                'secure_phone' => $this->secure_phone,
-            ]);
         } else { // create
-            $this->validate(Helper::onCreateCouponValidationArray($this->coupons));
-            $order = Order::create([
-                'order_id' => $this->order_id,
-                'price' => $this->price,
-                'note' => $this->note,
-                'secure_phone' => $this->secure_phone,
-            ]);
+
         }
 
         session()->flash('message', 'تم الحفظ بنجاح');
-        $this->saveCoupons($order);
         $this->coupons = [];
         $this->order = "";
         $this->order_id = "";
         $this->price = "0";
         $this->note = "";
         $this->secure_phone = "";
+    }
+
+    public function validateBeforeUpdate()
+    {
+        $this->validate(Helper::onUpdateValidationArray($this->coupons, $this->order));
+
+        $this->update();
+    }
+
+    public function validateBeforeStore()
+    {
+        $this->validate(Helper::onCreateCouponValidationArray($this->coupons));
+        $this->store();
+    }
+
+    public function update(): \Illuminate\Database\Eloquent\Model|Order|\Illuminate\Database\Eloquent\Collection|array|null
+    {
+        $order = Order::find($this->order);
+        $order->update([
+            'order_id' => $this->order_id,
+            'price' => $this->price,
+            'note' => $this->note,
+            'secure_phone' => $this->secure_phone,
+        ]);
+        $this->saveCoupons($order);
+
+        return $order;
+    }
+
+    public function store(): void
+    {
+        $order =Order::create([
+            'order_id' => $this->order_id,
+            'price' => $this->price,
+            'note' => $this->note,
+            'secure_phone' => $this->secure_phone,
+        ]);
+
+        $this->saveCoupons($order);
     }
 
     public function delete($order_id)
