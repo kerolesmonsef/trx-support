@@ -62,7 +62,7 @@ class Orders extends Component
             $this->validateBeforeUpdate();
 
         } else { // create
-
+            $this->validateBeforeStore();
         }
 
         session()->flash('message', 'تم الحفظ بنجاح');
