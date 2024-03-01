@@ -125,7 +125,7 @@
                 @foreach($complains as $complain)
                     <tr>
                         <td>{{ $complain->id }} | {{ $complain->code }}</td>
-                        <td>{{ $complain->order->id }}</td>
+                        <td>{{ $complain->order->order_id }}</td>
                         <td>
                             @component("livewire.components.complainStatus")
                                 @slot("orderComplain",$complain)
