@@ -32,6 +32,7 @@ Route::get('/', [OrdersController::class, 'welcome'])->name("welcome");
 
 Route::get("/order/check/has/security", [OrdersController::class, 'check_if_order_has_security'])->name("order.check.has.security")->middleware("throttle:30,1");
 Route::get("order/{order_id}", [OrdersController::class, 'show'])->name("orders.show")->middleware("throttle:30,1");
+Route::get("order/u/{uuid}", [OrdersController::class, 'uuid_show'])->middleware("throttle:30,1")->name("order.uuid.show");
 Route::get("order/security/{order_id}", [OrdersController::class, 'show_security'])->name("orders.security")->middleware("throttle:30,1");
 Route::get("order/security/validate/{order_id}", [OrdersController::class, 'validate_security'])->name("orders.security.validate")->middleware("throttle:30,1");
 Route::post("complain/{order}/store", [ComplainController::class, 'store'])->name("client.complain.store");

@@ -1,7 +1,13 @@
+<?php
+$order_obj = null;
+if ($order) {
+    $order_obj = \App\Models\Order::find($order);
+}
+?>
 <div class="card">
     <div class="card-header">
         @if($order)
-            تعديل الطلب رقم {{ \App\Models\Order::find($order)?->order_id }}
+            تعديل الطلب رقم {{ $order_obj?->order_id }}
         @else
             طلب جديد
         @endif
@@ -29,6 +35,17 @@
                         <input type="text" class="form-control" wire:model.live="secure_phone">
                     </div>
                 </div>
+            </div>
+            <div>
+                @if($order_obj)
+                    <button
+                            data-url="{{ route("order.uuid.show",$order_obj?->uuid) }}"
+                            type="button"
+                            class="copy-uuid btn btn-sm btn-dark mb-1">
+                        <i class="fas fa-copy"></i>
+                        نسخ الرابط
+                    </button>
+                @endif
             </div>
             <div class="col-md-12">
                 <h2 class="text-center">الكوبونات</h2>

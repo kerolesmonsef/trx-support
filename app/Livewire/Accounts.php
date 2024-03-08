@@ -118,6 +118,7 @@ class Accounts extends Component
         $this->password = "";
 
         $this->resetErrorBag();
+        $this->dispatch('reloadClassicEditor', "");
     }
 
     public function cancel(): void

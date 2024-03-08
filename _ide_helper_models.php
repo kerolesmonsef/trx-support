@@ -207,6 +207,7 @@ namespace App\Models{
  * @property int|null $warning_rank
  * @property string|null $warning_message
  * @property int $can_ticket
+ * @property string|null $uuid
  * @property-read \App\Models\Account|null $account
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Activity> $activities
  * @property-read int|null $activities_count
@@ -229,6 +230,7 @@ namespace App\Models{
  * @method static \Illuminate\Database\Eloquent\Builder|Order whereSecurePhone($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Order whereSeenAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Order whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Order whereUuid($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Order whereWarningMessage($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Order whereWarningRank($value)
  * @mixin \Eloquent

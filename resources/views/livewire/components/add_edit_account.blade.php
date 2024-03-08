@@ -87,6 +87,14 @@
                                             </div>
                                         </div>
                                         <div class="col-md-4">
+                                            @if(isset($account['uuid']))
+                                                <button
+                                                    data-url="{{ route("order.uuid.show",$account['uuid']) }}"
+                                                    type="button"
+                                                    class="copy-uuid btn btn-sm btn-dark mb-1">
+                                                    <i class="fas fa-copy"></i>
+                                                    نسخ الرابط</button>
+                                            @endif
                                             @if(isset($account['account_object']))
                                                 <?php $order_i = $account['account_object']->order; ?>
                                                 @component("components.order_note_modal")
@@ -216,6 +224,7 @@
     Livewire.on('reloadClassicEditor', (content)=>{
         reloadEditor(content?.[0])
     });
+
 </script>
 
 @endpush

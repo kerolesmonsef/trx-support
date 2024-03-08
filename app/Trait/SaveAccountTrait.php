@@ -84,6 +84,7 @@ trait SaveAccountTrait
                 'warning_message' => $account->order->warning_message,
                 'account_object' => $account,
                 'subscription_expire_at' => $account->subscription_expire_at,
+                'uuid' => $account->order->uuid,
             ];
         })->toArray();
 

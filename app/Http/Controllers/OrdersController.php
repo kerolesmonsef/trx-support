@@ -74,6 +74,26 @@ class OrdersController extends Controller
         return view('show_order', compact('order'));
     }
 
+
+    public function uuid_show($uuid)
+    {
+        $order = Order::where('uuid', $uuid)->first();
+
+        if (!$order) {
+            return redirect()->to("/")->with("error", "رقم الطلب خاطئ");
+        }
+
+        $order->timestamps = false;
+
+        $order->update([
+            'seen_at' => now()
+        ]);
+
+        $order->touch();
+
+        return view('show_order', compact('order'));
+    }
+
     public function show($order_id)
     {
         $order = Order::where('order_id', $order_id)->first();
