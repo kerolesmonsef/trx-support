@@ -23,6 +23,7 @@
         <script src="{{ asset("js/main.js") }}"></script>
         <link href="{{ asset("css/tailwind.min.css") }}" rel="stylesheet">
         <link href="{{ asset("css/admin-main.css") }}" rel="stylesheet">
+        <link href="{{ asset("css/all.min.css") }}" rel="stylesheet">
     @endauth
 </head>
 <body>

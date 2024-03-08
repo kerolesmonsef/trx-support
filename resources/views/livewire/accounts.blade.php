@@ -3,7 +3,9 @@
 /** @var $group \App\Models\Group */
 ?>
 <div>
-
+    <div wire:loading style="position: fixed;  z-index: 999; width: 100%; height: 100%;">
+        <i class="fas fa-spinner fa-spin" style="font-size: 300px;"></i>
+    </div>
 
     @include("livewire.components.add_edit_account")
 
